@@ -5,7 +5,7 @@ from .models import FlashcardsCollection
 
 
 class FlashcardAdmin(admin.ModelAdmin):
-    list_display = ('primary_text', 'secondary_text', 'collection')
+    list_display = ('primary_text', 'secondary_text', 'collection', 'owner', 'is_public')
 
 
 admin.site.register(Flashcard, FlashcardAdmin)
@@ -13,6 +13,7 @@ admin.site.register(Flashcard, FlashcardAdmin)
 
 class FlashcardInline(admin.TabularInline):
     model = Flashcard
+
 
 class FlashcardsCollectionAdmin(admin.ModelAdmin):
     list_display = ['title']

@@ -1,8 +1,9 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from rest_framework.decorators import action
 from rest_framework.response import Response
+from rest_framework_nested.viewsets import NestedViewSetMixin
 
-from api_flashcards.models import FlashcardsCollection
+from api_flashcards.models import FlashcardsCollection, Flashcard
 from api_flashcards.permissions import IsOwner
 from api_flashcards.serializers import FlashcardsCollectionSerializer, FlashcardSerializer
 
@@ -17,3 +18,8 @@ class FlashcardsCollectionViewSet(viewsets.ModelViewSet):
         collection = FlashcardsCollection.objects.get(pk=pk)
         serializer = FlashcardSerializer(collection.flashcards.all(), many=True)
         return Response(serializer.data)
+
+
+class FlashcardViewSet(viewsets.ModelViewSet):
+    queryset = Flashcard.objects.all()
+    serializer_class = FlashcardSerializer
