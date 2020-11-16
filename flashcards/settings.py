@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'bootstrap4',
     'api_flashcards.apps.ApiFlashcardsConfig',
     'api_accounts.apps.ApiAccountsConfig',
@@ -55,6 +56,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'flashcards.urls'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication'
+    ]
+}
 
 TEMPLATES = [
     {

@@ -16,10 +16,11 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
+
 urlpatterns = [
     path('', include('flashcards_site.urls')),
     path('api_flashcards/', include('api_flashcards.urls')),
-    path('api-registration/', include('rest_framework.urls')),
+    path('api_accounts/', include('api_accounts.urls')),
     path('accounts/', include('accounts.urls')),
     path('admin/', admin.site.urls),
 ]
