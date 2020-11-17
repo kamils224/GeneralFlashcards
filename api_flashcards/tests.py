@@ -4,4 +4,6 @@ from api_accounts.models import User
 
 
 class GetFlashcardsTest(APITestCase):
-    pass
+
+    def setUp(self) -> None:
+        pass
