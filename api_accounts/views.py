@@ -6,7 +6,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 
 from api_accounts.models import User
-from api_accounts.serializers import UserSerializer, ChangePasswordSerializer
+from api_accounts.serializers import UserRegistrationSerializer, ChangePasswordSerializer
 
 
 class CustomAuthToken(ObtainAuthToken):
@@ -25,16 +25,16 @@ class CustomAuthToken(ObtainAuthToken):
         })
 
 
-class UserCreateView(generics.CreateAPIView):
+class UserRegistrationView(generics.CreateAPIView):
     """
     An endpoint for creating user.
     """
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserRegistrationSerializer
     permission_classes = [AllowAny]
 
     def create(self, request, *args, **kwargs):
-        serializer = UserSerializer(data=request.data)
+        serializer = UserRegistrationSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
             if user:

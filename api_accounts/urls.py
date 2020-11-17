@@ -1,13 +1,14 @@
 from django.urls import path
-
 from rest_framework.urlpatterns import format_suffix_patterns
-from rest_framework.authtoken import views
-from api_accounts.views import UserCreateView, CustomAuthToken, ChangePasswordView
+
+from api_accounts.views import UserRegistrationView, CustomAuthToken, ChangePasswordView
+
+app_name = 'api_accounts'
 
 urlpatterns = [
-    path('register/', UserCreateView.as_view()),
-    path('login/', CustomAuthToken.as_view()),
-    path('password_reset/', ChangePasswordView.as_view())
+    path('register/', UserRegistrationView.as_view(), name='register'),
+    path('login/', CustomAuthToken.as_view(), name='login'),
+    path('password-change/', ChangePasswordView.as_view(), name='password_change')
 ]
 
 urlpatterns = format_suffix_patterns(urlpatterns)

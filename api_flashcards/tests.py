@@ -1,2 +1,7 @@
-from django.test import TestCase
-from rest_framework.test import APIRequestFactory
+from rest_framework.test import APITestCase
+
+from api_accounts.models import User
+
+
+class GetFlashcardsTest(APITestCase):
+    pass

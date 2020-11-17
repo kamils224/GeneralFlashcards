@@ -59,8 +59,9 @@ ROOT_URLCONF = 'flashcards.urls'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication'
-    ]
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+    'TEST_REQUEST_DEFAULT_FORMAT': 'json',
 }
 
 TEMPLATES = [
@@ -134,5 +135,5 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-#EMAIL_BACKEND = "mailer.backend.DbBackend"
+# EMAIL_BACKEND = "mailer.backend.DbBackend"
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'  # During development only
