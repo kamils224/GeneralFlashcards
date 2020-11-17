@@ -6,7 +6,7 @@ from api_accounts.views import UserCreateView, CustomAuthToken, ChangePasswordVi
 
 urlpatterns = [
     path('register/', UserCreateView.as_view()),
-    path('authenticate/', CustomAuthToken.as_view()),
+    path('login/', CustomAuthToken.as_view()),
     path('password_reset/', ChangePasswordView.as_view())
 ]
 
