@@ -20,27 +20,25 @@ class FlashcardsCollectionViewSet(viewsets.ModelViewSet):
         serializer = FlashcardSerializer(collection.flashcards.all(), many=True)
         return Response(serializer.data)
 
-    @action(methods=['get'], detail=False, url_path='user-collections', url_name='user_collections')
+    @action(methods=['get'], detail=False, url_path='user-collections', url_name='user-collections')
     def get_user_collections(self, request):
         user = request.user
         if user.is_authenticated:
-            collections = Flashcard.objects.filter(owner=user.id)
+            collections = FlashcardsCollection.objects.filter(owner=user.id)
             serializer = FlashcardsCollectionSerializer(collections, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response({'error': 'User is not logged in.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
 class FlashcardViewSet(viewsets.ModelViewSet):
-    queryset = Flashcard.objects.filter(is_public=True)
+    queryset = Flashcard.objects.all()
     serializer_class = FlashcardSerializer
     authentication_classes = [TokenAuthentication]
     permission_classes = [IsOwnerOrReadOnly]
 
-    @action(methods=['get'], detail=False, url_path='user-items', url_name='user_items')
-    def get_user_items(self, request):
-        user = request.user
+    def get_queryset(self):
+        user = self.request.user
         if user.is_authenticated:
-            flashcards = Flashcard.objects.filter(owner=user.id)
-            serializer = FlashcardSerializer(flashcards, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        return Response({'error': 'User is not logged in.'}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
+            flash = Flashcard.objects.filter(owner=user)
+            return flash
+        return Flashcard.objects.none()
