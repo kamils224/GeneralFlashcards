@@ -1,6 +1,6 @@
-from django.db import models
 from django.conf import settings
 from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
 
 
 class FlashcardsCollection(models.Model):
@@ -24,6 +24,6 @@ class Flashcard(models.Model):
     collection = models.ForeignKey(FlashcardsCollection,
                                    related_name='flashcards',
                                    on_delete=models.CASCADE,
-                                   default=None)
+                                   blank=True,
+                                   null=True)
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='flashcards', on_delete=models.CASCADE)
-    is_public = models.BooleanField(default=False)
