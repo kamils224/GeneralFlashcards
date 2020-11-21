@@ -1,5 +1,7 @@
 from rest_framework import permissions
 
+from api_flashcards.models import FlashcardsCollection, Flashcard
+
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
@@ -15,3 +17,17 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
         # Instance must have an attribute named `owner`.
         return obj.owner == request.user
+
+
+class IsCollectionOwner(permissions.BasePermission):
+    """
+    Object-level permission to only allow owners of a collection to edit it.
+    Assumes the model instance has a `collection` attribute.
+    """
+
+    def has_permission(self, request, view):
+        return request.user.is_authenticated
+
+    def has_object_permission(self, request, view, obj):
+        collections = FlashcardsCollection.objects.filter(owner=request.user)
+        return obj.collection in collections

@@ -23,7 +23,4 @@ class Flashcard(models.Model):
     secondary_text = models.CharField(max_length=255, default='')
     collection = models.ForeignKey(FlashcardsCollection,
                                    related_name='flashcards',
-                                   on_delete=models.CASCADE,
-                                   blank=True,
-                                   null=True)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='flashcards', on_delete=models.CASCADE)
+                                   on_delete=models.CASCADE)
