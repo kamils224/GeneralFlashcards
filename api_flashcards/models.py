@@ -6,7 +6,6 @@ from django.db import models
 class FlashcardsCollection(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=255)
-    advancement_level = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(10)])
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='collections', on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=False)
