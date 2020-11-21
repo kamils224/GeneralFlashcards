@@ -15,9 +15,15 @@ export default function App() {
     <NavigationContainer>
       <SafeAreaProvider>
         <SafeAreaView style={styles.container}>
-          <Stack.Navigator initialRouteName="Auth">
+          <Stack.Navigator 
+              screenOptions={{
+                headerStyle: styles.headerStyle
+              }} 
+              initialRouteName="Auth">
+
             <Stack.Screen options={{headerShown: false}} name="Login" component={LoginScreen} />
             <Stack.Screen name="Register" component={RegisterScreen} />
+
           </Stack.Navigator>
         </SafeAreaView>
       </SafeAreaProvider>
@@ -32,4 +38,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
   },
+  headerStyle:{
+    height: 80,
+  }
 });

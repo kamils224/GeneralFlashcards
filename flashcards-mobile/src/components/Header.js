@@ -1,14 +1,17 @@
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { Text } from 'react-native-elements'
+import Spacer from './Spacer';
 
 
 
 const Header = ({title}) => {
     return (
-        <Text style={styles.logoTitle}>
-            {title}
-        </Text>
+        <Spacer>
+            <Text style={styles.logoTitle}>
+                {title}
+            </Text>
+        </Spacer>
     );
 }
 
