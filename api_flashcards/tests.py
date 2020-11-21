@@ -25,7 +25,6 @@ class FlashcardsTest(APITestCase):
             item_data = {
                 'title': f'title{i}',
                 'description': f'description{i}',
-                'advancement_level': i,
                 'owner': user,
                 'is_public': is_public
             }
