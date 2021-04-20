@@ -15,12 +15,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework_simplejwt import views as jwt_views
 
 
 urlpatterns = [
-    path('', include('flashcards_site.urls')),
-    path('api_flashcards/', include('api_flashcards.urls')),
-    path('api_accounts/', include('api_accounts.urls')),
-    path('accounts/', include('accounts.urls')),
-    path('admin/', admin.site.urls),
+    path("api/cards/", include("cards.urls")),
+    path(
+        "api/token/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"
+    ),
+    path(
+        "api/token/refresh/", jwt_views.TokenRefreshView.as_view(), name="token_refresh"
+    ),
+    path("admin/", admin.site.urls),
 ]
