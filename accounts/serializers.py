@@ -19,11 +19,9 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {"password": {"required": True, "write_only": True}}
 
     def create(self, validated_data):
-        # TODO change is active to false after implementing email token
         user = User.objects.create_user(
             validated_data["email"],
             validated_data["password"],
-            is_active=True,
         )
         return user
 
