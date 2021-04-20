@@ -7,7 +7,7 @@ app_name = 'cards'
 
 router = DefaultRouter()
 router.register('collection', views.FlashcardsCollectionViewSet, basename='collection')
-router.register('cards', views.FlashcardViewSet, basename='cards')
+router.register('flashcards', views.FlashcardViewSet, basename='flashcards')
 
 urlpatterns = [
     path('', include(router.urls))
