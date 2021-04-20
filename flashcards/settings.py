@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "cards",
     "accounts",
+    "oauth2_provider",
 ]
 
 MIDDLEWARE = [
@@ -52,10 +53,21 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "flashcards.urls"
 
+OAUTH2_PROVIDER = {
+    # this is the list of available scopes
+    "SCOPES": {
+        "read": "Read scope",
+        "write": "Write scope",
+        "groups": "Access to your groups",
+    }
+}
+
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": [
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ],
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
     "TEST_REQUEST_DEFAULT_FORMAT": "json",
 }
 
