@@ -43,6 +43,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     # requires email verification
     is_active = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     objects = EmailUsernameUserManager()
     USERNAME_FIELD = "email"

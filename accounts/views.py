@@ -1,8 +1,11 @@
 from django.db import transaction
 from rest_framework import status
 from rest_framework.response import Response
-from rest_framework.generics import CreateAPIView, RetrieveAPIView
+from rest_framework.generics import CreateAPIView, RetrieveAPIView, GenericAPIView
 from rest_framework.permissions import AllowAny
+from social_django.utils import psa
+from rest_framework.decorators import api_view, permission_classes
+
 
 from accounts.models import User
 from accounts.serializers import (
