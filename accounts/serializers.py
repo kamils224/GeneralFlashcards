@@ -1,10 +1,9 @@
-from django.core.validators import MinLengthValidator
 from django.contrib.auth import get_user_model
-from django.utils.http import urlsafe_base64_decode
-from django.utils.encoding import force_bytes, force_text
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.validators import MinLengthValidator
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
 from rest_framework import serializers
-from rest_framework.exceptions import AuthenticationFailed
 
 from accounts.models import User
 from accounts.utils import VerificationTokenGenerator
@@ -44,7 +43,7 @@ class ActivateAccountSerializer(serializers.Serializer):
         token = data["token"]
         User = get_user_model()
         try:
-            uid = force_text(urlsafe_base64_decode(uid))
+            uid = force_str(urlsafe_base64_decode(uid))
             user = User.objects.get(pk=uid)
         except (ObjectDoesNotExist, ValueError):
             raise serializers.ValidationError("Given user does not exist")
