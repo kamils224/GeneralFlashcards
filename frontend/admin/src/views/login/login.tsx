@@ -1,6 +1,6 @@
 import React from "react";
-import {Box, Grid, Stack, TextField} from "@mui/material";
-import Colors from "styles/variables.module.scss";
+import {Box, Button, Grid, Stack, TextField} from "@mui/material";
+import Colors from "styles/colors.module.scss";
 import "./login.scss";
 
 
@@ -22,6 +22,7 @@ export const LoginView = () => {
                 <Stack m={5} justifyContent="center" spacing={2}>
                     <TextField sx={{backgroundColor: Colors.backgroundWhite}} label="Email" variant="outlined"/>
                     <TextField label="Password" variant="outlined"/>
+                    <Button variant="contained">Login</Button>
                 </Stack>
             </Box>
         </Grid>
