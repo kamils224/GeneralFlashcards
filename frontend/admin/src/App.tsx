@@ -1,7 +1,7 @@
 import React from 'react';
-import 'App.css';
+import 'App.scss';
 import {Route, Routes} from 'react-router-dom';
-import {LoginView} from 'views/login';
+import {LoginView} from 'views/login/login';
 
 
 function App() {
