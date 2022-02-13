@@ -1,5 +1,5 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import type {RootState} from 'redux-store/store';
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import type {RootState} from "redux-store/store";
 
 interface AuthState {
     token: string | null;
@@ -9,7 +9,7 @@ const initialState = {
   token: null,
 } as AuthState;
 export const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     setAuthToken: (state, action: PayloadAction<string>) => {
