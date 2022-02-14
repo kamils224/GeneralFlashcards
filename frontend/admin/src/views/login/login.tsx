@@ -2,15 +2,18 @@ import React, {useState} from "react";
 import {Box, Button, Grid, Stack, TextField} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import "./login.scss";
+import authService from "api/auth";
+import {authActions} from "redux-store/slices/authSlice";
+import {useAppDispatch} from "redux-store/hooks";
 
 export const LoginView = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const dispatch = useAppDispatch();
 
-  const handleLogin = () => {
-    console.log("Login handle");
-    console.log(email);
-    console.log(password);
+  const handleLogin = async () => {
+    const authData = await authService.login(email, password);
+    dispatch(authActions.setAuthToken(authData));
   };
 
   return (
@@ -31,7 +34,7 @@ export const LoginView = () => {
           <TextField sx={{backgroundColor: Colors.backgroundWhite}}
             label="Email" variant="outlined"
             onChange={(e) => setEmail(e.target.value)}/>
-          <TextField label="Password" variant="outlined"
+          <TextField type="password" label="Password" variant="outlined"
             onChange={(e) => setPassword(e.target.value)}/>
           <Button variant="contained" onClick={handleLogin}>Login</Button>
         </Stack>
