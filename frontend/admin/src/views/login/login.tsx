@@ -11,7 +11,8 @@ export const LoginView = () => {
   const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
 
-  const handleLogin = async () => {
+  const handleLogin = async (event:any) => {
+    event.preventDefault();
     const authData = await authService.login(email, password);
     dispatch(authActions.setAuthToken(authData));
   };
@@ -30,14 +31,17 @@ export const LoginView = () => {
         border: 1,
       }}>
         <h2 className="header">Flashcards Admin</h2>
-        <Stack m={5} justifyContent="center" spacing={2}>
-          <TextField sx={{backgroundColor: Colors.backgroundWhite}}
-            label="Email" variant="outlined"
-            onChange={(e) => setEmail(e.target.value)}/>
-          <TextField type="password" label="Password" variant="outlined"
-            onChange={(e) => setPassword(e.target.value)}/>
-          <Button variant="contained" onClick={handleLogin}>Login</Button>
-        </Stack>
+        <form>
+          <Stack m={5} justifyContent="center" spacing={2}>
+            <TextField sx={{backgroundColor: Colors.backgroundWhite}}
+              label="Email" variant="outlined"
+              onChange={(e) => setEmail(e.target.value)}/>
+            <TextField type="password" label="Password" variant="outlined"
+              onChange={(e) => setPassword(e.target.value)}/>
+            <Button type="submit" variant="contained"
+              onClick={handleLogin}>Login</Button>
+          </Stack>
+        </form>
       </Box>
     </Grid>
   );
