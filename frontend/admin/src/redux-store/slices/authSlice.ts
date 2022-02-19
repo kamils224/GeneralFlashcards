@@ -1,6 +1,8 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import type {RootState} from "redux-store/store";
 import {AuthTokens} from "api/auth";
+import {AppDispatch} from "redux-store/store";
+import Cookies from "js-cookie";
 
 
 interface AuthState {
@@ -11,6 +13,7 @@ interface AuthState {
 const initialState = {
   token: null,
 } as AuthState;
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -24,6 +27,15 @@ export const authSlice = createSlice({
     },
   },
 });
+
+export const storeAuthData = (authData: AuthTokens) => {
+  Cookies.set("token", authData.token);
+  Cookies.set("refreshToken", authData.refreshToken);
+
+  return (dispatch: AppDispatch) => {
+    dispatch(authSlice.actions.setAuthToken(authData));
+  };
+};
 
 export const authActions = authSlice.actions;
 export const selectToken = (state: RootState) => state.auth.token;

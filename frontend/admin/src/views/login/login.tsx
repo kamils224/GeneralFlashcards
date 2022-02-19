@@ -3,18 +3,24 @@ import {Box, Button, Grid, Stack, TextField} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import "./login.scss";
 import authService from "api/auth";
-import {authActions} from "redux-store/slices/authSlice";
+import {storeAuthData} from "redux-store/slices/authSlice";
 import {useAppDispatch} from "redux-store/hooks";
 
 export const LoginView = () => {
   const [email, setEmail] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const dispatch = useAppDispatch();
 
   const handleLogin = async (event:any) => {
     event.preventDefault();
-    const authData = await authService.login(email, password);
-    dispatch(authActions.setAuthToken(authData));
+    setError("");
+    try {
+      const authData = await authService.login(email, password);
+      dispatch(storeAuthData(authData));
+    } catch (error) {
+      setError("Invalid email or password.");
+    }
   };
 
   return (
@@ -33,10 +39,12 @@ export const LoginView = () => {
         <h2 className="header">Flashcards Admin</h2>
         <form>
           <Stack m={5} justifyContent="center" spacing={2}>
-            <TextField sx={{backgroundColor: Colors.backgroundWhite}}
+            <TextField error={!!error}
+              sx={{backgroundColor: Colors.backgroundWhite}}
               label="Email" variant="outlined"
               onChange={(e) => setEmail(e.target.value)}/>
-            <TextField type="password" label="Password" variant="outlined"
+            <TextField error={!!error} helperText={error}
+              type="password" label="Password" variant="outlined"
               onChange={(e) => setPassword(e.target.value)}/>
             <Button type="submit" variant="contained"
               onClick={handleLogin}>Login</Button>
