@@ -5,6 +5,6 @@ type Props ={
   children?: JSX.Element
 }
 
-export const AdminNavigationBar = ({children}: Props) => {
+export const NavigationBar = ({children}: Props) => {
   return <AppBar>{children}</AppBar>;
 };

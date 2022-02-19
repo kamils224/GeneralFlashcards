@@ -25,6 +25,6 @@ module.exports = {
     "quotes": [2, "double", {"avoidEscape": true}],
     "require-jsdoc": 0,
     "no-unused-vars": "off",
-    "@typescript-eslint/no-unused-vars": ["error"],
+    "@typescript-eslint/no-unused-vars": ["warn"],
   },
 };
