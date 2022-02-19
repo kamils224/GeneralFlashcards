@@ -1,10 +1,14 @@
 import React from "react";
-import {AppBar} from "@mui/material";
+import {AppBar, Button, Toolbar, Typography} from "@mui/material";
 
-type Props ={
-  children?: JSX.Element
-}
-
-export const NavigationBar = ({children}: Props) => {
-  return <AppBar>{children}</AppBar>;
+export const NavigationBar = () => {
+  return <AppBar>
+    <Toolbar>
+      <Typography variant="h4" component="div" sx={{flexGrow: 2}}>
+            Flashcards Dashboard
+      </Typography>
+      <Button size="large" color="secondary"
+        variant="contained">Log out</Button>
+    </Toolbar>
+  </AppBar>;
 };

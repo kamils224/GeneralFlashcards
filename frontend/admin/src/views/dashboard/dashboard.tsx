@@ -1,11 +1,12 @@
-import React from "react";
+import React, {Fragment} from "react";
 import {NavigationBar} from "components/navigationBar";
 
 
 export const DashboardView = () => {
   return (
-    <NavigationBar >
+    <Fragment>
+      <NavigationBar />
       <div>Dashboard</div>
-    </NavigationBar>
+    </Fragment>
   );
 };
