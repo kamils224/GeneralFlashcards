@@ -3,8 +3,8 @@ import config from "config.json";
 
 
 export interface AuthTokens {
-  token: string;
-  refreshToken: string;
+  token: string | null;
+  refreshToken: string | null;
 }
 
 class AuthService {

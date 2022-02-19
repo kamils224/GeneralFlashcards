@@ -1,11 +1,10 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
-import type {RootState} from "redux-store/store";
 import {AuthTokens} from "api/auth";
 import {AppDispatch} from "redux-store/store";
 import Cookies from "js-cookie";
 
 
-interface AuthState {
+export interface AuthState {
     token: string | null;
     refreshToken: string | null;
 }
@@ -29,8 +28,10 @@ export const authSlice = createSlice({
 });
 
 export const storeAuthData = (authData: AuthTokens) => {
-  Cookies.set("token", authData.token);
-  Cookies.set("refreshToken", authData.refreshToken);
+  if (authData.token && authData.refreshToken) {
+    Cookies.set("token", authData.token);
+    Cookies.set("refreshToken", authData.refreshToken);
+  }
 
   return (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.setAuthToken(authData));
@@ -38,7 +39,4 @@ export const storeAuthData = (authData: AuthTokens) => {
 };
 
 export const authActions = authSlice.actions;
-export const selectToken = (state: RootState) => state.auth.token;
-export const isAuthenticated = (state: RootState) => !!state.auth.token;
-
 export default authSlice.reducer;
