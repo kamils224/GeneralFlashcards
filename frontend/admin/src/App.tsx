@@ -1,16 +1,16 @@
 import React from "react";
 import "App.scss";
-import {Route, Routes} from "react-router-dom";
+import {Navigate, Route, Routes} from "react-router-dom";
 import {LoginView} from "views/login/login";
+import {DashboardView} from "views/dashboard/dashboard";
 
-// eslint-disable-next-line require-jsdoc
 function App() {
   return (
-    <div className="App">
-      <Routes>
-        <Route path="login" element={<LoginView/>}/>
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<Navigate replace to="login"/>} />
+      <Route path="/login" element={<LoginView/>}/>
+      <Route path="/dashboard" element={<DashboardView/>}/>
+    </Routes>
   );
 }
 
