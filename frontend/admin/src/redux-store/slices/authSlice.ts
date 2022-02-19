@@ -10,7 +10,8 @@ export interface AuthState {
 }
 
 const initialState = {
-  token: null,
+  token: Cookies.get("token") || null,
+  refreshToken: Cookies.get("refreshToken") || null,
 } as AuthState;
 
 export const authSlice = createSlice({
