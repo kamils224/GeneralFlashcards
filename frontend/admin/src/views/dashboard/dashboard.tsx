@@ -1,5 +1,11 @@
+import React from "react";
+import {AdminNavigationBar} from "components/AdminNavigationBar";
 
 
 export const DashboardView = () => {
-  return <div>Dashboard</div>;
+  return (
+    <AdminNavigationBar >
+      <div>Dashboard</div>
+    </AdminNavigationBar>
+  );
 };
