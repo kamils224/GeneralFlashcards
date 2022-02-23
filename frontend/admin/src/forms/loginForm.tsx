@@ -1,9 +1,7 @@
 import {Button, Stack, TextField} from "@mui/material";
 import Colors from "../styles/colors.module.scss";
 import React, {FormEvent, Fragment, useState} from "react";
-import {useAppDispatch} from "redux-store/hooks";
-import authService from "api/auth";
-import {storeAuthData} from "redux-store/slices/authSlice";
+import authService from "services/auth.service";
 import {CircularLoading} from "components/loadings/circularLoading";
 
 
@@ -16,7 +14,6 @@ export const LoginForm = (props: Props) => {
   const [error, setError] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const dispatch = useAppDispatch();
   const {onSuccess} = props;
 
   const validateInput = ():boolean => {
@@ -27,15 +24,16 @@ export const LoginForm = (props: Props) => {
     event.preventDefault();
     setError("");
     if (!validateInput()) {
+      console.log("return");
       return;
     }
     try {
       setIsLoading(true);
-      const authData = await authService.login(email, password);
-      dispatch(storeAuthData(authData));
+      await authService.login(email, password);
       setIsLoading(false);
       onSuccess();
     } catch (error) {
+      console.log(error);
       setError("Invalid email or password.");
       setIsLoading(false);
     }
@@ -45,17 +43,18 @@ export const LoginForm = (props: Props) => {
     if (isLoading) {
       return <CircularLoading style={{marginTop: "40%"}}/>;
     }
-    return <form>
+    return <form onSubmit={handleLogin}>
       <Stack m={5} justifyContent="center" spacing={2}>
         <TextField error={!!error}
+          value={email}
           sx={{backgroundColor: Colors.backgroundWhite}}
           label="Email" variant="outlined"
           onChange={(e) => setEmail(e.target.value)}/>
         <TextField error={!!error} helperText={error}
+          value={password}
           type="password" label="Password" variant="outlined"
           onChange={(e) => setPassword(e.target.value)}/>
-        <Button type="submit" variant="contained"
-          onClick={handleLogin}>Login</Button>
+        <Button type="submit" variant="contained">Login</Button>
       </Stack>
     </form>;
   };

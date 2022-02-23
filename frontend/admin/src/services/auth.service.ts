@@ -1,10 +1,10 @@
 import axios from "axios";
 import config from "config.json";
-
+import {storeAuthData} from "redux-store/slices/authSlice";
 
 export interface AuthTokens {
-  token: string | null;
-  refreshToken: string | null;
+  token: string,
+  refreshToken:string;
 }
 
 class AuthService {
@@ -15,9 +15,15 @@ class AuthService {
         `${this.BASE_URL}api/accounts/token/`,
         {email: email, password: password});
 
+    if (response.data.access && response.data.refresh) {
+      const authData = {
+        token: response.data.access,
+        refreshToken: response.data.refresh,
+      };
+      storeAuthData(authData);
+    }
     return {token: response.data.access, refreshToken: response.data.refresh};
   }
 }
 
-const authService = new AuthService();
-export default authService;
+export default new AuthService();
