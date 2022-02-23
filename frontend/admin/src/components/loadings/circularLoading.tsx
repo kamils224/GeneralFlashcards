@@ -1,6 +1,6 @@
 import React, {CSSProperties} from "react";
 import {CircularProgress} from "@mui/material";
-import "./circularLoading.scss";
+import styles from "./circularLoading.module.scss";
 
 type Props = {
   style?: CSSProperties;
@@ -9,7 +9,7 @@ type Props = {
 
 export const CircularLoading = (props: Props) => {
   return <div style={props.style}
-    className={`${props.className} circular-loading`}>
+    className={`${props.className} ${styles.circularLoading}`}>
     <CircularProgress/>
   </div>;
 };

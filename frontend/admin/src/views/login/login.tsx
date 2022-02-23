@@ -1,7 +1,7 @@
 import React from "react";
 import {Box, Grid} from "@mui/material";
 import Colors from "styles/colors.module.scss";
-import "./login.scss";
+import styles from "./login.module.scss";
 
 import {LoginForm} from "forms/loginForm";
 
@@ -23,7 +23,7 @@ export const LoginView = () => {
         minHeight: {md: 500, xs: "100%"},
         border: 1,
       }}>
-        <h2 className="header">Flashcards Admin</h2>
+        <h2 className={styles.header}>Flashcards Admin</h2>
         <LoginForm onSuccess={handleLoginSuccess} />
       </Box>
     </Grid>
