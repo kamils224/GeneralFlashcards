@@ -1,8 +1,11 @@
 import {Button, Stack, TextField} from "@mui/material";
-import Colors from "../styles/colors.module.scss";
+import Colors from "styles/colors.module.scss";
 import React, {FormEvent, Fragment, useState} from "react";
-import authService from "services/auth.service";
+import {login} from "services/auth.api";
 import {CircularLoading} from "components/loadings/circularLoading";
+import useHttp from "hooks/use-http";
+import {useAppDispatch} from "redux-store/hooks";
+import {authActions} from "redux-store/slices/authSlice";
 
 
 type Props = {
@@ -11,36 +14,35 @@ type Props = {
 
 export const LoginForm = (props: Props) => {
   const [email, setEmail] = useState<string>("");
-  const [error, setError] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-  const [isLoading, setIsLoading] = useState<boolean>(false);
   const {onSuccess} = props;
+  const {sendRequest: sendLoginRequest,
+    pending, data, error} = useHttp(login, false);
 
+  const dispatch = useAppDispatch();
   const validateInput = ():boolean => {
     return !!(email && password);
   };
 
   const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
-    setError("");
     if (!validateInput()) {
-      console.log("return");
+      // todo: add error handling
       return;
     }
-    try {
-      setIsLoading(true);
-      await authService.login(email, password);
-      setIsLoading(false);
+    await sendLoginRequest({email, password});
+    if (!error) {
+      dispatch(authActions.setAuthToken({
+        token: data?.token,
+        refreshToken: data?.refreshToken,
+      },
+      ));
       onSuccess();
-    } catch (error) {
-      console.log(error);
-      setError("Invalid email or password.");
-      setIsLoading(false);
     }
   };
 
   const renderForm = () => {
-    if (isLoading) {
+    if (pending) {
       return <CircularLoading style={{marginTop: "40%"}}/>;
     }
     return <form onSubmit={handleLogin}>
