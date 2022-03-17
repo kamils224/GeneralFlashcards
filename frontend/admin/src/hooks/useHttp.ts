@@ -1,63 +1,63 @@
 import {useReducer, useCallback} from "react";
 
 enum ActionType {
-  SEND = "SEND",
-  SUCCESS = "SUCCESS",
-  ERROR = "ERROR"
+  Send = "SEND",
+  Success = "SUCCESS",
+  Error = "ERROR"
 }
 
-type State = {
-  data: Record<string, any> | null,
+type State<T> = {
+  data: T | null,
   error: string | null,
   pending: boolean
 }
 
 type Action =
-        | { type: ActionType.SEND }
-        | { type: ActionType.SUCCESS, responseData: Record<string, any> }
-        | { type: ActionType.ERROR, errorMessage: string }
+        | { type: ActionType.Send }
+        | { type: ActionType.Success, responseData: Record<string, any> }
+        | { type: ActionType.Error, errorMessage: string }
 
-function httpReducer(state: State, action: Action) {
-  if (action.type === ActionType.SEND) {
+function httpReducer<T>(state: State<T>, action: Action) {
+  if (action.type === ActionType.Send) {
     return {
       data: null,
       error: null,
       pending: true,
-    };
+    } as State<T>;
   }
-  if (action.type === ActionType.SUCCESS) {
+  if (action.type === ActionType.Success) {
     return {
       data: action.responseData,
       error: null,
       pending: false,
-    };
+    } as State<T>;
   }
-  if (action.type === ActionType.ERROR) {
+  if (action.type === ActionType.Error) {
     return {
       data: null,
       error: action.errorMessage,
       pending: false,
-    };
+    } as State<T>;
   }
-  return state;
+  return state as State<T>;
 }
 
-function useHttp(requestFunction: any, startWithPending = false) {
+function useHttp<T>(requestFunction: any, startWithPending = false) {
   const [httpState, dispatch] = useReducer(httpReducer, {
     data: null,
     error: null,
     pending: startWithPending,
-  } as State);
+  } as State<T>);
 
   const sendRequest = useCallback(
       async function(requestData) {
-        dispatch({type: ActionType.SEND});
+        dispatch({type: ActionType.Send});
         try {
           const responseData = await requestFunction(requestData);
-          dispatch({type: ActionType.SUCCESS, responseData});
+          dispatch({type: ActionType.Success, responseData});
         } catch (error: any ) {
           dispatch({
-            type: ActionType.ERROR,
+            type: ActionType.Error,
             errorMessage: error.message || "Something went wrong!",
           });
         }
@@ -67,7 +67,7 @@ function useHttp(requestFunction: any, startWithPending = false) {
 
   return {
     sendRequest,
-    ...httpState,
+    ...httpState as State<T>,
   };
 }
 

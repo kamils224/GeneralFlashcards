@@ -4,13 +4,13 @@ import Cookies from "js-cookie";
 
 
 export interface AuthState {
-    token: string | null;
-    refreshToken: string | null;
+    token?: string;
+    refreshToken?: string;
 }
 
 const initialState = {
-  token: Cookies.get("token") || null,
-  refreshToken: Cookies.get("refreshToken") || null,
+  token: Cookies.get("token") || undefined,
+  refreshToken: Cookies.get("refreshToken") || undefined,
 } as AuthState;
 
 export const authSlice = createSlice({
@@ -22,7 +22,7 @@ export const authSlice = createSlice({
       state.refreshToken = action.payload.refreshToken;
     },
     removeAuthToken: (state) => {
-      state.token = null;
+      state.token = undefined;
     },
   },
 });
