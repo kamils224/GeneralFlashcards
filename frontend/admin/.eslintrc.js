@@ -19,6 +19,7 @@ module.exports = {
   },
   "plugins": [
     "react",
+    "react-hooks",
     "@typescript-eslint",
   ],
   "rules": {
@@ -27,5 +28,11 @@ module.exports = {
     "no-unused-vars": "off",
     "@typescript-eslint/no-unused-vars": ["warn"],
     "@typescript-eslint/no-explicit-any": "off",
+    "max-len": ["error", {"code": 120}],
+  },
+  "settings": {
+    "react": {
+      "version": "detect",
+    },
   },
 };
