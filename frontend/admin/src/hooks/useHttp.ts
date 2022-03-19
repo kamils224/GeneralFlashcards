@@ -1,4 +1,4 @@
-import {useReducer, useCallback} from "react";
+import {useReducer, useCallback, Reducer} from "react";
 
 enum ActionType {
   Send = "SEND",
@@ -7,50 +7,44 @@ enum ActionType {
 }
 
 type State<T> = {
-  data: T | null,
-  error: string | null,
+  data?: T,
+  error?: string,
   pending: boolean
 }
 
-type Action =
+type Action<T> =
         | { type: ActionType.Send }
-        | { type: ActionType.Success, responseData: Record<string, any> }
+        | { type: ActionType.Success, responseData: T }
         | { type: ActionType.Error, errorMessage: string }
 
-function httpReducer<T>(state: State<T>, action: Action) {
+function httpReducer<T>(state: State<T>, action: Action<T>): State<T> {
   if (action.type === ActionType.Send) {
     return {
-      data: null,
-      error: null,
       pending: true,
-    } as State<T>;
+    };
   }
   if (action.type === ActionType.Success) {
     return {
       data: action.responseData,
-      error: null,
       pending: false,
-    } as State<T>;
+    };
   }
   if (action.type === ActionType.Error) {
     return {
-      data: null,
       error: action.errorMessage,
       pending: false,
-    } as State<T>;
+    };
   }
-  return state as State<T>;
+  return state;
 }
 
-function useHttp<T>(requestFunction: any, startWithPending = false) {
-  const [httpState, dispatch] = useReducer(httpReducer, {
-    data: null,
-    error: null,
+function useHttp<T, U>(requestFunction: (payload: T) => Promise<U>, startWithPending = false) {
+  const [httpState, dispatch] = useReducer<Reducer<State<U>, Action<U>>>(httpReducer, {
     pending: startWithPending,
-  } as State<T>);
+  } as State<U>);
 
   const sendRequest = useCallback(
-      async function(requestData) {
+      async function(requestData: T) {
         dispatch({type: ActionType.Send});
         try {
           const responseData = await requestFunction(requestData);
@@ -67,7 +61,7 @@ function useHttp<T>(requestFunction: any, startWithPending = false) {
 
   return {
     sendRequest,
-    ...httpState as State<T>,
+    ...httpState,
   };
 }
 

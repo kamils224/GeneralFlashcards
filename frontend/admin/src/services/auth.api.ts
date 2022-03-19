@@ -14,10 +14,10 @@ export interface AuthTokens {
 
 const BASE_URL = config.BACKEND_URL;
 
-export const login = async (data: LoginPayload): Promise<AuthTokens> => {
+export const login = async (payload: LoginPayload): Promise<AuthTokens> => {
   const response = await axios.post(
       `${BASE_URL}api/accounts/token/`,
-      {email: data.email, password: data.password});
+      {email: payload.email, password: payload.password});
 
   if (response.data.access && response.data.refresh) {
     const authData = {

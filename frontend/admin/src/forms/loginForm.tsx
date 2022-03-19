@@ -1,7 +1,7 @@
 import {Button, Stack, TextField} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import React, {FormEvent, Fragment, useState} from "react";
-import {AuthTokens, login} from "services/auth.api";
+import {AuthTokens, login, LoginPayload} from "services/auth.api";
 import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
 import {useAppDispatch} from "redux-store/hooks";
@@ -16,7 +16,8 @@ export const LoginForm = (props: Props) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const {onSuccess} = props;
-  const {sendRequest: sendLoginRequest, pending, data, error} = useHttp<AuthTokens>(login, false);
+  const {sendRequest: sendLoginRequest, pending, data, error} =
+      useHttp<LoginPayload, AuthTokens>(login, false);
 
   const dispatch = useAppDispatch();
   const validateInput = ():boolean => {
