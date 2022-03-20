@@ -38,13 +38,13 @@ function httpReducer<T>(state: State<T>, action: Action<T>): State<T> {
   return state;
 }
 
-function useHttp<T, U>(requestFunction: (payload: T) => Promise<U>, startWithPending = false) {
-  const [httpState, dispatch] = useReducer<Reducer<State<U>, Action<U>>>(httpReducer, {
+function useHttp<T>(requestFunction: (payload?: any) => Promise<T>, startWithPending = false) {
+  const [httpState, dispatch] = useReducer<Reducer<State<T>, Action<T>>>(httpReducer, {
     pending: startWithPending,
-  } as State<U>);
+  } as State<T>);
 
   const sendRequest = useCallback(
-      async function(requestData: T) {
+      async function(requestData?: any) {
         dispatch({type: ActionType.Send});
         try {
           const responseData = await requestFunction(requestData);
