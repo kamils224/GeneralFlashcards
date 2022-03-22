@@ -1,11 +1,11 @@
 import {Button, Stack, TextField} from "@mui/material";
 import Colors from "styles/colors.module.scss";
-import React, {FormEvent, Fragment, useState} from "react";
-import {AuthTokens, login} from "services/auth.api";
+import React, {FormEvent, Fragment, useRef} from "react";
+import {AuthTokens, getAuthTokens} from "services/auth.api";
 import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
+import {storeAuthData} from "redux-store/slices/authSlice";
 import {useAppDispatch} from "redux-store/hooks";
-import {authActions} from "redux-store/slices/authSlice";
 
 
 type Props = {
@@ -13,30 +13,33 @@ type Props = {
 }
 
 export const LoginForm = (props: Props) => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const emailInput = useRef<HTMLInputElement>(null);
+  const passwordInput = useRef<HTMLInputElement>(null);
+  const dispatch = useAppDispatch();
   const {onSuccess} = props;
   const {sendRequest: sendLoginRequest, pending, data, error} =
-      useHttp<AuthTokens>(login, false);
-
-  const dispatch = useAppDispatch();
+      useHttp<AuthTokens>(getAuthTokens, false);
   const validateInput = ():boolean => {
-    return !!(email && password);
+    return !!(emailInput.current?.value && passwordInput.current?.value);
   };
 
-  const handleLogin = async (event: FormEvent) => {
+  const handleLogin = (event: FormEvent) => {
     event.preventDefault();
     if (!validateInput()) {
       // todo: add error handling
       return;
     }
-    await sendLoginRequest({email, password});
+    const loginPayload = {
+      email: emailInput.current?.value,
+      password: passwordInput.current?.value,
+    };
+    sendLoginRequest(loginPayload);
     if (!error) {
-      dispatch(authActions.setAuthToken({
+      const authData = {
         token: data?.token,
         refreshToken: data?.refreshToken,
-      },
-      ));
+      };
+      dispatch(storeAuthData(authData));
       onSuccess();
     }
   };
@@ -48,14 +51,14 @@ export const LoginForm = (props: Props) => {
     return <form onSubmit={handleLogin}>
       <Stack m={5} justifyContent="center" spacing={2}>
         <TextField error={!!error}
-          value={email}
+          inputRef={emailInput}
           sx={{backgroundColor: Colors.backgroundWhite}}
           label="Email" variant="outlined"
-          onChange={(e) => setEmail(e.target.value)}/>
+        />
         <TextField error={!!error} helperText={error}
-          value={password}
+          inputRef={passwordInput}
           type="password" label="Password" variant="outlined"
-          onChange={(e) => setPassword(e.target.value)}/>
+        />
         <Button type="submit" variant="contained">Login</Button>
       </Stack>
     </form>;

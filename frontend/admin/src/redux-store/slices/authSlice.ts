@@ -17,7 +17,7 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setAuthToken: (state, action: PayloadAction<AuthState>) => {
+    setAuthTokens: (state, action: PayloadAction<AuthState>) => {
       state.token = action.payload.token;
       state.refreshToken = action.payload.refreshToken;
     },
@@ -32,9 +32,8 @@ export const storeAuthData = (authData: AuthState) => {
     Cookies.set("token", authData.token);
     Cookies.set("refreshToken", authData.refreshToken);
   }
-
   return (dispatch: AppDispatch) => {
-    dispatch(authSlice.actions.setAuthToken(authData));
+    dispatch(authSlice.actions.setAuthTokens(authData));
   };
 };
 

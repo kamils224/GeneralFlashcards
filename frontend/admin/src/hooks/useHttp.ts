@@ -8,7 +8,7 @@ enum ActionType {
 
 type State<T> = {
   data?: T,
-  error?: string,
+  error?: any,
   pending: boolean
 }
 

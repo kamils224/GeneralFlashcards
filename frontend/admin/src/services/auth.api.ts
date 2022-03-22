@@ -14,7 +14,7 @@ export interface AuthTokens {
 
 const BASE_URL = config.BACKEND_URL;
 
-export const login = async (payload: LoginPayload): Promise<AuthTokens> => {
+export const getAuthTokens = async (payload: LoginPayload): Promise<AuthTokens> => {
   const response = await axios.post(
       `${BASE_URL}api/accounts/token/`,
       {email: payload.email, password: payload.password});
