@@ -1,6 +1,6 @@
 import {Button, Stack, TextField} from "@mui/material";
 import Colors from "styles/colors.module.scss";
-import React, {FormEvent, Fragment, useRef} from "react";
+import React, {FormEvent, Fragment, useEffect, useRef} from "react";
 import {AuthTokens, getAuthTokens} from "services/auth.api";
 import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
@@ -22,8 +22,17 @@ export const LoginForm = (props: Props) => {
   const validateInput = ():boolean => {
     return !!(emailInput.current?.value && passwordInput.current?.value);
   };
-
-  const handleLogin = (event: FormEvent) => {
+  const handleLogin = () => {
+    if (data) {
+      const authData = {
+        token: data?.token,
+        refreshToken: data?.refreshToken,
+      };
+      dispatch(storeAuthData(authData));
+      onSuccess();
+    }
+  };
+  const handleLoginForm = (event: FormEvent) => {
     event.preventDefault();
     if (!validateInput()) {
       // todo: add error handling
@@ -34,30 +43,24 @@ export const LoginForm = (props: Props) => {
       password: passwordInput.current?.value,
     };
     sendLoginRequest(loginPayload);
-    if (!error) {
-      const authData = {
-        token: data?.token,
-        refreshToken: data?.refreshToken,
-      };
-      dispatch(storeAuthData(authData));
-      onSuccess();
-    }
   };
+
+  useEffect(handleLogin, [data]);
 
   const renderForm = () => {
     if (pending) {
       return <CircularLoading style={{marginTop: "40%"}}/>;
     }
-    return <form onSubmit={handleLogin}>
+    return <form onSubmit={handleLoginForm}>
       <Stack m={5} justifyContent="center" spacing={2}>
         <TextField error={!!error}
           inputRef={emailInput}
           sx={{backgroundColor: Colors.backgroundWhite}}
-          label="Email" variant="outlined"
+          label="Email" variant="outlined" value={"grevax24@gmail.com"}
         />
         <TextField error={!!error} helperText={error}
           inputRef={passwordInput}
-          type="password" label="Password" variant="outlined"
+          type="password" label="Password" variant="outlined" value={"admin"}
         />
         <Button type="submit" variant="contained">Login</Button>
       </Stack>
