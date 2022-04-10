@@ -12,7 +12,6 @@ interface JwtToken {
   user_id: string
 }
 
-
 export const setupJwtTokens = async (): Promise<AuthTokens | null> => {
   const token = Cookies.get("token");
   const refreshToken = Cookies.get("refreshToken");
@@ -37,3 +36,5 @@ export const setupJwtTokens = async (): Promise<AuthTokens | null> => {
   }
   return null;
 };
+
+// todo: add timeout for token refresh
