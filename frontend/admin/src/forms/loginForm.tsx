@@ -56,11 +56,11 @@ export const LoginForm = (props: Props) => {
         <TextField error={!!error}
           inputRef={emailInput}
           sx={{backgroundColor: Colors.backgroundWhite}}
-          label="Email" variant="outlined" value={"grevax24@gmail.com"}
+          label="Email" variant="outlined"
         />
         <TextField error={!!error} helperText={error}
           inputRef={passwordInput}
-          type="password" label="Password" variant="outlined" value={"admin"}
+          type="password" label="Password" variant="outlined"
         />
         <Button type="submit" variant="contained">Login</Button>
       </Stack>
