@@ -1,10 +1,10 @@
 import {Button, Stack, TextField} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import React, {FormEvent, Fragment, useEffect, useRef} from "react";
-import {AuthTokens, getAuthTokens} from "services/auth.api";
+import AuthAPI, {AuthTokens} from "services/auth.api";
 import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
-import {storeAuthData} from "redux-store/slices/authSlice";
+import {saveAuthData} from "redux-store/slices/authSlice";
 import {useAppDispatch} from "redux-store/hooks";
 
 
@@ -18,7 +18,7 @@ export const LoginForm: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const {onSuccess} = props;
   const {sendRequest: sendLoginRequest, pending, data, error} =
-      useHttp<AuthTokens>(getAuthTokens, false);
+      useHttp<AuthTokens>(AuthAPI.getAuthTokens, false);
   const validateInput = ():boolean => {
     return !!(emailInput.current?.value && passwordInput.current?.value);
   };
@@ -28,7 +28,7 @@ export const LoginForm: React.FC<Props> = (props) => {
         token: data?.token,
         refreshToken: data?.refreshToken,
       };
-      dispatch(storeAuthData(authData));
+      dispatch(saveAuthData(authData));
       onSuccess();
     }
   };

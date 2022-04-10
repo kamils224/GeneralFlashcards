@@ -13,10 +13,20 @@ export interface AuthTokens {
 
 const BASE_URL = config.BACKEND_URL;
 
-export const getAuthTokens = async (payload: LoginPayload): Promise<AuthTokens> => {
-  const response = await axios.post(
-      `${BASE_URL}api/accounts/token/`,
-      {email: payload.email, password: payload.password});
-  return {token: response.data.access, refreshToken: response.data.refresh};
-};
+class AuthAPI {
+  async getAuthTokens(payload: LoginPayload): Promise<AuthTokens> {
+    const response = await axios.post(
+        `${BASE_URL}api/accounts/token/`,
+        {email: payload.email, password: payload.password});
+    return {token: response.data.access, refreshToken: response.data.refresh};
+  }
+  async refreshToken(refresh: string): Promise<AuthTokens> {
+    const response = await axios.post(
+        `${BASE_URL}api/accounts/token/refresh/`,
+        {refresh: refresh});
+    return {token: response.data.access, refreshToken: response.data.refresh};
+  }
+}
+
+export default new AuthAPI();
 

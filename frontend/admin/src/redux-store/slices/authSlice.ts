@@ -9,31 +9,30 @@ export interface AuthState {
 }
 
 const initialState = {
-  token: Cookies.get("token") || undefined,
-  refreshToken: Cookies.get("refreshToken") || undefined,
+  token: Cookies.get("token"),
+  refreshToken: Cookies.get("refreshToken"),
 } as AuthState;
 
 export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setAuthTokens: (state, action: PayloadAction<AuthState>) => {
+    setAuthState: (state, action: PayloadAction<AuthState>) => {
       state.token = action.payload.token;
       state.refreshToken = action.payload.refreshToken;
     },
     removeAuthToken: (state) => {
       state.token = undefined;
+      state.refreshToken = undefined;
     },
   },
 });
 
-export const storeAuthData = (authData: AuthState) => {
-  if (authData.token && authData.refreshToken) {
-    Cookies.set("token", authData.token);
-    Cookies.set("refreshToken", authData.refreshToken);
-  }
+export const saveAuthData = (authData: AuthState) => {
+  Cookies.set("token", authData.token || "");
+  Cookies.set("refreshToken", authData.refreshToken || "");
   return (dispatch: AppDispatch) => {
-    dispatch(authSlice.actions.setAuthTokens(authData));
+    dispatch(authSlice.actions.setAuthState(authData));
   };
 };
 
