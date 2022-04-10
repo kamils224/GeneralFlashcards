@@ -12,7 +12,7 @@ type Props = {
   onSuccess: () => void;
 }
 
-export const LoginForm = (props: Props) => {
+export const LoginForm: React.FC<Props> = (props) => {
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
@@ -32,7 +32,7 @@ export const LoginForm = (props: Props) => {
       onSuccess();
     }
   };
-  const handleLoginForm = (event: FormEvent) => {
+  const submitLogin = (event: FormEvent) => {
     event.preventDefault();
     if (!validateInput()) {
       // todo: add error handling
@@ -51,7 +51,7 @@ export const LoginForm = (props: Props) => {
     if (pending) {
       return <CircularLoading style={{marginTop: "40%"}}/>;
     }
-    return <form onSubmit={handleLoginForm}>
+    return <form onSubmit={submitLogin}>
       <Stack m={5} justifyContent="center" spacing={2}>
         <TextField error={!!error}
           inputRef={emailInput}
