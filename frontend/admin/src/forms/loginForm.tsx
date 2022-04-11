@@ -17,16 +17,16 @@ export const LoginForm: React.FC<Props> = (props) => {
   const passwordInput = useRef<HTMLInputElement>(null);
   const dispatch = useAppDispatch();
   const {onSuccess} = props;
-  const {sendRequest: sendLoginRequest, pending, data, error} =
+  const {sendRequest: sendLoginRequest, pending, data: tokens, error} =
       useHttp<AuthTokens>(AuthAPI.getAuthTokens, false);
   const validateInput = ():boolean => {
     return !!(emailInput.current?.value && passwordInput.current?.value);
   };
   const handleLogin = () => {
-    if (data) {
+    if (tokens) {
       const authData = {
-        token: data?.token,
-        refreshToken: data?.refreshToken,
+        token: tokens?.token,
+        refreshToken: tokens?.refreshToken,
       };
       dispatch(saveAuthData(authData));
       onSuccess();
@@ -45,7 +45,7 @@ export const LoginForm: React.FC<Props> = (props) => {
     sendLoginRequest(loginPayload);
   };
 
-  useEffect(handleLogin, [data]);
+  useEffect(handleLogin, [tokens]);
 
   const renderForm = () => {
     if (pending) {

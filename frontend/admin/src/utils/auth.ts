@@ -33,6 +33,7 @@ export const setupJwtTokens = async (): Promise<AuthTokens | null> => {
         } as AuthTokens;
       }
     }
+    return {token, refreshToken} as AuthTokens;
   }
   return null;
 };
