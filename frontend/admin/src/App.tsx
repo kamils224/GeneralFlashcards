@@ -5,7 +5,8 @@ import {LoginView} from "views/login/login";
 import {DashboardView} from "views/dashboard/dashboard";
 import {setupJwtTokens} from "utils/auth";
 import {useAppDispatch, useAppSelector} from "redux-store/hooks";
-import {saveAuthData} from "./redux-store/slices/authSlice";
+import {saveAuthData} from "redux-store/slices/authSlice";
+import {isAuthenticated} from "redux-store/getters/authGetters";
 
 
 function App() {
@@ -22,7 +23,8 @@ function App() {
       }
     });
   }, []);
-  const isAuthenticated = useAppSelector((state) => !!state.auth.token);
+  const isLoggedIn = useAppSelector(isAuthenticated);
+  console.log(isLoggedIn); // todo
   // todo: add router guard
 
   return (
