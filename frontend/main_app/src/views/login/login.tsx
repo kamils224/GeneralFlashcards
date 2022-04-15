@@ -23,7 +23,7 @@ export const LoginView = () => {
         minHeight: {md: 500, xs: "100%"},
         border: 1,
       }}>
-        <h2 className={styles.header}>Flashcards Admin</h2>
+        <h2 className={styles.header}>Log in to start</h2>
         <LoginForm onSuccess={handleLoginSuccess} />
       </Box>
     </Grid>
