@@ -22,11 +22,15 @@ export function useRefreshAuthTokens() {
       }
     });
     const currentToken = authTokens.token;
+    console.log(authTokens);
     if (currentToken) {
       const decodedToken = jwtDecode<JwtToken>(currentToken);
       const timeToExpiration = getTimeToExpiration(decodedToken.exp * 1000);
+      console.log(timeToExpiration);
+      console.log(new Date(timeToExpiration));
       const logoutTimer = setTimeout(() => {
-        dispatch(authActions.removeAuthToken());
+        console.log("Remove token");
+        dispatch(authActions.removeAuthData());
       }, timeToExpiration);
       return () => {
         clearTimeout(logoutTimer);

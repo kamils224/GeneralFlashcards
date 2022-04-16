@@ -21,7 +21,7 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.refreshToken = action.payload.refreshToken;
     },
-    removeAuthToken: (state) => {
+    removeAuthData: (state) => {
       state.token = undefined;
       state.refreshToken = undefined;
     },

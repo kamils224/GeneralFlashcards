@@ -23,11 +23,11 @@ class AuthAPI {
       throw new LoginError();
     }
   }
-  async refreshToken(refresh: string): Promise<AuthTokens> {
+  async refreshToken(refresh: string): Promise<string> {
     const response = await axios.post(
         "api/accounts/token/refresh/",
         {refresh: refresh});
-    return {token: response.data.access, refreshToken: response.data.refresh};
+    return response.data.access;
   }
 }
 

@@ -2,8 +2,6 @@ import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
 import AuthAPI, {AuthTokens} from "services/auth.api";
 
-const TIME_TO_REFRESH_TOKEN = 60000 * 10; // 5 minutes
-
 export interface JwtToken {
   token_type: string;
   exp: number;
@@ -22,21 +20,26 @@ export const setupJwtTokens = async (): Promise<AuthTokens | null> => {
   const refreshToken = Cookies.get("refreshToken");
 
   if (token && refreshToken) {
+    const decodedRefreshToken = jwtDecode<JwtToken>(refreshToken);
     const decodedToken = jwtDecode<JwtToken>(token);
-    const tokenExpiration = new Date(decodedToken.exp * 1000);
-    const tokenRefreshDate = new Date(Date.now() - TIME_TO_REFRESH_TOKEN);
+
+    const refreshTokenExpiration = decodedRefreshToken.exp * 1000;
+    const tokenExpiration = decodedToken.exp * 1000;
+    const tokenRefreshDate = Date.now();
+
+    if (refreshTokenExpiration <= tokenRefreshDate) {
+      Cookies.remove("token");
+      Cookies.remove("refreshToken");
+      return null;
+    }
 
     if (tokenExpiration <= tokenRefreshDate) {
-      const decodedRefreshToken = jwtDecode<JwtToken>(refreshToken);
-      const refreshTokenExpiration = new Date(decodedRefreshToken.exp * 1000);
-
-      if (refreshTokenExpiration > tokenRefreshDate) {
-        const newTokens = await AuthAPI.refreshToken(refreshToken);
-        return {
-          token: newTokens?.token,
-          refreshToken: newTokens?.refreshToken,
-        } as AuthTokens;
-      }
+      console.log("Refresh token");
+      const newToken = await AuthAPI.refreshToken(refreshToken);
+      return {
+        token: newToken,
+        refreshToken: refreshToken,
+      } as AuthTokens;
     }
     return {token, refreshToken} as AuthTokens;
   }
