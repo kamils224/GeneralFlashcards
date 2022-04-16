@@ -10,6 +10,6 @@ type Props = {
 export const CircularLoading = (props: Props) => {
   return <div style={props.style}
     className={`${props.className} ${styles.circularLoading}`}>
-    <CircularProgress/>
+    <CircularProgress color="primary"/>
   </div>;
 };

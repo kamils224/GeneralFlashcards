@@ -21,7 +21,7 @@ export const LoginView = () => {
         backgroundColor: Colors.backgroundWhite,
         minWidth: {md: 500, xs: "100%"},
         minHeight: {md: 500, xs: "100%"},
-        border: 1,
+        boxShadow: 3,
       }}>
         <h2 className={styles.header}>Log in to start</h2>
         <LoginForm onSuccess={handleLoginSuccess} />

@@ -1,4 +1,5 @@
 import axios from "axiosInstance";
+import {LoginError} from "services/errors.api";
 
 
 export interface LoginPayload {
@@ -13,10 +14,14 @@ export interface AuthTokens {
 
 class AuthAPI {
   async getAuthTokens(payload: LoginPayload): Promise<AuthTokens> {
-    const response = await axios.post(
-        "api/accounts/token/",
-        {email: payload.email, password: payload.password});
-    return {token: response.data.access, refreshToken: response.data.refresh};
+    try {
+      const response = await axios.post(
+          "api/accounts/token/",
+          {email: payload.email, password: payload.password});
+      return {token: response.data.access, refreshToken: response.data.refresh};
+    } catch {
+      throw new LoginError();
+    }
   }
   async refreshToken(refresh: string): Promise<AuthTokens> {
     const response = await axios.post(
