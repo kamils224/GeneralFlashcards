@@ -1,15 +1,8 @@
 $background-white: white;
 $background-primary: #c4c4c4;
 
-$button-primary: #64fd42;
-$button-primary-hover: #26b203;
-$text-primary: #000000;
-
 
 :export {
   backgroundWhite: $background-white;
   backgroundPrimary: $background-primary;
-  buttonPrimary: $button-primary;
-  buttonPrimaryHover: $button-primary-hover;
-  textPrimary: $text-primary;
 }

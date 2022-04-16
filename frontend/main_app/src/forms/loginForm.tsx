@@ -62,7 +62,7 @@ export const LoginForm: React.FC<Props> = (props) => {
           inputRef={passwordInput}
           type="password" label="Password" variant="outlined"
         />
-        <Button type="submit" variant="contained">Login</Button>
+        <Button color="secondary" type="submit" variant="contained">Login</Button>
       </Stack>
     </form>;
   };
