@@ -4,13 +4,18 @@ import AuthAPI, {AuthTokens} from "services/auth.api";
 
 const TIME_TO_REFRESH_TOKEN = 60000 * 10; // 5 minutes
 
-interface JwtToken {
+export interface JwtToken {
   token_type: string;
   exp: number;
   iat: number;
   jti: string,
   user_id: string
 }
+
+export const getTimeToExpiration = (timestamp: number): number => {
+  const remaining = timestamp - Date.now();
+  return remaining >= 0 ? remaining : 0;
+};
 
 export const setupJwtTokens = async (): Promise<AuthTokens | null> => {
   const token = Cookies.get("token");
@@ -37,5 +42,3 @@ export const setupJwtTokens = async (): Promise<AuthTokens | null> => {
   }
   return null;
 };
-
-// todo: add timeout for token refresh

@@ -8,10 +8,7 @@ import {NavigationBar} from "./components/navigationBar";
 
 
 function App() {
-  const isLoggedIn = useRefreshAuthTokens();
-
-  console.log("Render component");
-  console.log(isLoggedIn); // todo
+  useRefreshAuthTokens();
   // todo: add router guard
 
   return (
