@@ -3,9 +3,10 @@ import {selectIsAuthenticated} from "redux-store/selectors/authSelectors";
 import {setupJwtTokens} from "utils/auth";
 import {authActions, saveAuthData} from "redux-store/slices/authSlice";
 import {useEffect} from "react";
+import axios from "axiosInstance";
 
 
-export function useRefreshAuth() {
+export function useRefreshAuthTokens() {
   const dispatch = useAppDispatch();
   const isLoggedIn = useAppSelector(selectIsAuthenticated);
   const refreshTokens = () => {
@@ -16,7 +17,7 @@ export function useRefreshAuth() {
           refreshToken: tokens?.refreshToken,
         };
         dispatch(saveAuthData(authData));
-        // todo: set axios header
+        axios.defaults.headers.common["Authorization"] = `Bearer ${authData.token}`;
       }
     });
     // todo: start logout timer here

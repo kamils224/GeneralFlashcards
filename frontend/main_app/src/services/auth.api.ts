@@ -1,5 +1,5 @@
-import axios from "axios";
-import config from "config.json";
+import axios from "axiosInstance";
+
 
 export interface LoginPayload {
   email: string,
@@ -11,18 +11,16 @@ export interface AuthTokens {
   refreshToken:string;
 }
 
-const BASE_URL = config.BACKEND_URL;
-
 class AuthAPI {
   async getAuthTokens(payload: LoginPayload): Promise<AuthTokens> {
     const response = await axios.post(
-        `${BASE_URL}api/accounts/token/`,
+        "api/accounts/token/",
         {email: payload.email, password: payload.password});
     return {token: response.data.access, refreshToken: response.data.refresh};
   }
   async refreshToken(refresh: string): Promise<AuthTokens> {
     const response = await axios.post(
-        `${BASE_URL}api/accounts/token/refresh/`,
+        "api/accounts/token/refresh/",
         {refresh: refresh});
     return {token: response.data.access, refreshToken: response.data.refresh};
   }

@@ -3,11 +3,11 @@ import "App.scss";
 import {Navigate, Route, Routes} from "react-router-dom";
 import {LoginView} from "views/login/login";
 import {DashboardView} from "views/dashboard/dashboard";
-import {useRefreshAuth} from "hooks/auth/useRefreshAuth";
+import {useRefreshAuthTokens} from "hooks/auth/useRefreshAuth";
 
 
 function App() {
-  const isLoggedIn = useRefreshAuth();
+  const isLoggedIn = useRefreshAuthTokens();
 
   console.log("Render component");
   console.log(isLoggedIn); // todo
