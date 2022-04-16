@@ -9,7 +9,7 @@ export interface LoginPayload {
 
 export interface AuthTokens {
   token: string,
-  refreshToken:string;
+  refreshToken: string;
 }
 
 class AuthAPI {
