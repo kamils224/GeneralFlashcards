@@ -17,24 +17,19 @@ export const NavigationBar: React.FC<React.ReactNode> = (props ) => {
     navigate(RouteNames.login, {replace: true});
   };
 
-  return <Fragment>
-    <AppBar position="sticky" sx={{boxShadow: 3}}>
-      <Toolbar>
-        <Box sx={{flexGrow: 1}}>
-          <Typography color="secondary" variant="h4" component="div"
-            sx={{fontWeight: "bold"}}>
-            <span style={titleStyle}>Flashcards</span>
-          </Typography>
-          <Typography sx={{fontWeight: "bold"}} color="secondary" variant="h5" component="div">
-            <span style={titleStyle}>for general purpose</span>
-          </Typography>
-        </Box>
-        {isAuthenticated && <Button onClick={logOut}
-          size="large" color="secondary" variant="contained">Log out</Button>}
-      </Toolbar>
-    </AppBar>
-    <Container disableGutters maxWidth={false}>
-      {props.children}
-    </Container>
-  </Fragment>;
+  return <AppBar position="sticky" sx={{boxShadow: 3}}>
+    <Toolbar>
+      <Box sx={{flexGrow: 1}}>
+        <Typography color="secondary" variant="h4" component="div"
+          sx={{fontWeight: "bold"}}>
+          <span style={titleStyle}>Flashcards</span>
+        </Typography>
+        <Typography sx={{fontWeight: "bold"}} color="secondary" variant="h5" component="div">
+          <span style={titleStyle}>for general purpose</span>
+        </Typography>
+      </Box>
+      {isAuthenticated && <Button onClick={logOut}
+        size="large" color="secondary" variant="contained">Log out</Button>}
+    </Toolbar>
+  </AppBar>;
 };
