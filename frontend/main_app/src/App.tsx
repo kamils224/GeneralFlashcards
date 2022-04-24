@@ -1,22 +1,27 @@
-import React, {Fragment} from "react";
+import React from "react";
 import "App.scss";
-import {Navigate, Route, Routes} from "react-router-dom";
+import {Route, Routes} from "react-router-dom";
 import {LoginView} from "views/login/login";
 import {DashboardView} from "views/dashboard/dashboard";
 import {useRefreshAuthTokens} from "hooks/auth/useRefreshAuth";
-import {NavigationBar} from "./components/navigationBar";
+import {NavigationBar} from "components/navigationBar";
+import {RouteNames} from "routes/routeNames";
+import PrivateRoute from "routes/privateRoute";
+import PublicOnlyRoute from "routes/publicOnlyRoute";
 
 
 function App() {
   useRefreshAuthTokens();
-  // todo: add router guard
 
   return (
     <NavigationBar>
       <Routes>
-        <Route path="/" element={<Navigate replace to="login"/>} />
-        <Route path="/login" element={<LoginView/>}/>
-        <Route path="/dashboard" element={<DashboardView/>}/>
+        <Route path={RouteNames.home} element={<PrivateRoute/>}>
+          <Route path={RouteNames.dashboard} element={<DashboardView/>}/>
+        </Route>
+        <Route path={RouteNames.home} element={<PublicOnlyRoute/>}>
+          <Route path={RouteNames.login} element={<LoginView/>}/>
+        </Route>
       </Routes>
     </NavigationBar>
   );

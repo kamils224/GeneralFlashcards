@@ -4,10 +4,13 @@ import Colors from "styles/colors.module.scss";
 import styles from "./login.module.scss";
 
 import {LoginForm} from "forms/loginForm";
+import {useNavigate} from "react-router-dom";
+import {RouteNames} from "routes/routeNames";
 
 export const LoginView = () => {
+  const navigate = useNavigate();
   const handleLoginSuccess = () => {
-    console.log("Login success");
+    navigate(RouteNames.dashboard, {replace: true});
   };
 
   return (

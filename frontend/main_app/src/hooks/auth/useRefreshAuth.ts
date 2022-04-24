@@ -26,7 +26,7 @@ export function useRefreshAuthTokens() {
       const decodedToken = jwtDecode<JwtToken>(currentToken);
       const timeToExpiration = getTimeToExpiration(decodedToken.exp * 1000);
       const logoutTimer = setTimeout(() => {
-        dispatch(authActions.removeAuthData());
+        dispatch(authActions.removeAuthState());
       }, timeToExpiration);
       return () => {
         clearTimeout(logoutTimer);

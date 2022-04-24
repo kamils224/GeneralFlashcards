@@ -21,7 +21,7 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.refreshToken = action.payload.refreshToken;
     },
-    removeAuthData: (state) => {
+    removeAuthState: (state) => {
       state.token = undefined;
       state.refreshToken = undefined;
     },
@@ -33,6 +33,14 @@ export const saveAuthData = (authData: AuthState) => {
   Cookies.set("refreshToken", authData.refreshToken || "");
   return (dispatch: AppDispatch) => {
     dispatch(authSlice.actions.setAuthState(authData));
+  };
+};
+
+export const removeAuthData = () => {
+  Cookies.remove("token");
+  Cookies.remove("refreshToken");
+  return (dispatch: AppDispatch) => {
+    dispatch(authSlice.actions.removeAuthState());
   };
 };
 

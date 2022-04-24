@@ -1,8 +1,21 @@
 import React, {Fragment} from "react";
 import {AppBar, Box, Button, Container, Toolbar, Typography} from "@mui/material";
+import {useAppDispatch, useAppSelector} from "redux-store/hooks";
+import {selectIsAuthenticated} from "redux-store/selectors/authSelectors";
+import {removeAuthData} from "redux-store/slices/authSlice";
+import {useNavigate} from "react-router-dom";
+import {RouteNames} from "routes/routeNames";
 
 export const NavigationBar: React.FC<React.ReactNode> = (props ) => {
   const titleStyle = {textShadow: "1px 1px black"};
+  const isAuthenticated = useAppSelector(selectIsAuthenticated);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const logOut = () => {
+    dispatch(removeAuthData());
+    navigate(RouteNames.login, {replace: true});
+  };
 
   return <Fragment>
     <AppBar position="sticky" sx={{boxShadow: 3}}>
@@ -16,8 +29,8 @@ export const NavigationBar: React.FC<React.ReactNode> = (props ) => {
             <span style={titleStyle}>for general purpose</span>
           </Typography>
         </Box>
-        <Button size="large" color="secondary"
-          variant="contained">Log out</Button>
+        {isAuthenticated && <Button onClick={logOut}
+          size="large" color="secondary" variant="contained">Log out</Button>}
       </Toolbar>
     </AppBar>
     <Container disableGutters maxWidth={false}>
