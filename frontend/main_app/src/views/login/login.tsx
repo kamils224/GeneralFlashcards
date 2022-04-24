@@ -18,7 +18,7 @@ export const LoginView = () => {
       justifyContent="center"
       style={{minHeight: "100vh"}}>
       <Box alignItems="center" justifyContent="center" sx={{
-        backgroundColor: Colors.backgroundWhite,
+        backgroundColor: Colors.backgroundSecondary,
         minWidth: {md: 500, xs: "100%"},
         minHeight: {md: 500, xs: "100%"},
         boxShadow: 3,

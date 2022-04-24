@@ -1,5 +1,4 @@
-import {Button, Stack, TextField} from "@mui/material";
-import Colors from "styles/colors.module.scss";
+import {Button, Divider, Stack, TextField} from "@mui/material";
 import React, {FormEvent, Fragment, useEffect, useRef} from "react";
 import AuthAPI, {AuthTokens} from "services/auth.api";
 import {CircularLoading} from "components/loadings/circularLoading";
@@ -55,14 +54,15 @@ export const LoginForm: React.FC<Props> = (props) => {
       <Stack m={5} justifyContent="center" spacing={2}>
         <TextField error={!!error}
           inputRef={emailInput}
-          sx={{backgroundColor: Colors.backgroundWhite}}
           label="Email" variant="outlined"
         />
         <TextField error={!!error} helperText={error}
           inputRef={passwordInput}
           type="password" label="Password" variant="outlined"
         />
-        <Button color="secondary" type="submit" variant="contained">Login</Button>
+        <Button color="primary" type="submit" variant="contained">Login</Button>
+        <Divider/>
+        <Button color="secondary" type="submit" variant="contained">Create an account</Button>
       </Stack>
     </form>;
   };

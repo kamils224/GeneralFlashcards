@@ -12,7 +12,7 @@ export const NavigationBar = () => {
           <span style={titleStyle}>Flashcards</span>
         </Typography>
         <Typography sx={{fontWeight: "bold"}} color="secondary" variant="h5" component="div">
-          <span style={titleStyle}>for general purpose!</span>
+          <span style={titleStyle}>for general purpose</span>
         </Typography>
       </Box>
       <Button size="large" color="secondary"
