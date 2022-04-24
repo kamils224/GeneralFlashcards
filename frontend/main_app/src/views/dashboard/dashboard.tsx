@@ -1,12 +1,9 @@
-import React, {Fragment} from "react";
-import {NavigationBar} from "components/navigationBar";
+import React from "react";
+import {Typography} from "@mui/material";
 
 
 export const DashboardView = () => {
   return (
-    <Fragment>
-      <NavigationBar />
-      <div>Dashboard</div>
-    </Fragment>
+    <Typography >Dashboard TODO</Typography>
   );
 };

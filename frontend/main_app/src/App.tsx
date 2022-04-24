@@ -12,14 +12,13 @@ function App() {
   // todo: add router guard
 
   return (
-    <Fragment>
-      <NavigationBar/>
+    <NavigationBar>
       <Routes>
         <Route path="/" element={<Navigate replace to="login"/>} />
         <Route path="/login" element={<LoginView/>}/>
         <Route path="/dashboard" element={<DashboardView/>}/>
       </Routes>
-    </Fragment>
+    </NavigationBar>
   );
 }
 

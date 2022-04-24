@@ -34,7 +34,6 @@ export const setupJwtTokens = async (): Promise<AuthTokens | null> => {
     }
 
     if (tokenExpiration <= tokenRefreshDate) {
-      console.log("Refresh token");
       const newToken = await AuthAPI.refreshToken(refreshToken);
       return {
         token: newToken,
