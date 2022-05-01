@@ -1,6 +1,6 @@
 import {Button, Divider, Stack, TextField} from "@mui/material";
 import React, {FormEvent, Fragment, useEffect, useRef} from "react";
-import AuthAPI, {AuthTokens} from "services/auth.api";
+import authAPI, {AuthTokens} from "services/auth.api";
 import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
 import {saveAuthData} from "redux-store/slices/authSlice";
@@ -17,7 +17,7 @@ export const LoginForm: React.FC<Props> = (props) => {
   const dispatch = useAppDispatch();
   const {onSuccess} = props;
   const {sendRequest: sendLoginRequest, pending, data: tokens, error} =
-      useHttp<AuthTokens>(AuthAPI.getAuthTokens, false);
+      useHttp<AuthTokens>(authAPI.getAuthTokens, false);
   const validateInput = ():boolean => {
     return !!(emailInput.current?.value && passwordInput.current?.value);
   };

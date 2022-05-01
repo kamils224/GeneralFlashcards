@@ -2,7 +2,6 @@ import {useAppDispatch, useAppSelector} from "redux-store/hooks";
 import {getTimeToExpiration, JwtToken, setupJwtTokens} from "utils/auth";
 import {authActions, saveAuthData} from "redux-store/slices/authSlice";
 import {useEffect} from "react";
-import axios from "axiosInstance";
 import jwtDecode from "jwt-decode";
 
 
@@ -18,7 +17,6 @@ export function useRefreshAuthTokens() {
           refreshToken: tokens?.refreshToken,
         };
         dispatch(saveAuthData(authData));
-        axios.defaults.headers.common["Authorization"] = `Bearer ${authData.token}`;
       }
     });
     const currentToken = authTokens.token;

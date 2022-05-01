@@ -21,5 +21,5 @@ urlpatterns = [
     path("api/", include("cards.urls")),
     path("api/accounts/", include("accounts.urls")),
     path("admin/", admin.site.urls),
-    path("o/", include("oauth2_provider.urls", namespace="oauth2_provider")),
+    path("oauth/", include("oauth2_provider.urls", namespace="oauth2_provider")),
 ]
