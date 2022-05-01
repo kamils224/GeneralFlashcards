@@ -1,9 +1,10 @@
-import React from "react";
+import React, {useState, Fragment} from "react";
 import {Divider, Button, Typography, Stack, Paper} from "@mui/material";
 import Colors from "styles/colors.module.scss";
+import {InfoButton} from "components/buttons/infoButton";
 
 const boxStyle = {
-  height: 300,
+  height: 400,
   width: 350,
   backgroundColor: Colors.backgroundSecondary,
   boxShadow: 5,
@@ -14,10 +15,14 @@ const titleStyle = {
   alignSelf: "center",
   justifySelf: "center",
   p: 2,
-  height: "33%",
+  height: "25%",
   overflowWrap: "break-word",
   overflow: "auto",
   textOverflow: "ellipsis",
+};
+const mainContentStyle = {
+  height: "40%",
+  maxHeight: "40%",
 };
 const textStyle = {
   textAlign: "center",
@@ -25,12 +30,38 @@ const textStyle = {
   overflowWrap: "break-word",
 };
 
-export const CollectionCard = (props: any) => {
+type Props = {
+    title: string,
+    description: string
+}
+
+export const CollectionCard = (props: Props) => {
+  const [showDescription, setShowDescription] = useState(false);
+  const switchContent = () => {
+    setShowDescription(!showDescription);
+  };
+
+  const mainContent = (
+    <Stack alignItems="center" sx={mainContentStyle}>
+      {showDescription ?
+          <Fragment>
+            <InfoButton variant="text" color="info" onClick={switchContent}>Show progress</InfoButton>
+            <Typography variant="h6" sx={textStyle}>Progress: 0/0</Typography>
+          </Fragment> :
+          <Fragment>
+            <InfoButton variant="text" color="info" onClick={switchContent}>Show description</InfoButton>
+            <Typography variant="h6" sx={textStyle}>Description</Typography>
+          </Fragment>}
+    </Stack>
+  );
+
   return (
     <Paper sx={boxStyle}>
-      <Typography variant="h4" sx={titleStyle}>{props.title}</Typography>
+      <Typography variant="h4" sx={titleStyle}>
+        {props.title}
+      </Typography>
       <Divider/>
-      <Typography variant="h6" sx={textStyle}>{props.description}</Typography>
+      {mainContent}
       <Divider/>
       <Stack m={2} p={2} spacing={2} direction="row" justifyContent="center" alignItems="flex-end">
         <Button variant="contained" color="primary">

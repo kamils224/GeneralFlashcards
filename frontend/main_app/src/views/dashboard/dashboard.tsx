@@ -11,7 +11,7 @@ export const DashboardView = () => {
 
 
   return (
-    <Grid container spacing={3} p={2}>
+    <Grid container spacing={3} p={2} alignItems="center" justifyContent="center">
       <Grid item>
         <CollectionCard title="Title" description="Progress: 0/0"/>
       </Grid>
