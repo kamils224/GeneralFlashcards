@@ -17,7 +17,7 @@ export const NavigationBar: React.FC<React.ReactNode> = () => {
     navigate(RouteNames.login, {replace: true});
   };
 
-  return <AppBar position="sticky" sx={{boxShadow: 3}}>
+  return <AppBar position="sticky" sx={{boxShadow: 5}}>
     <Toolbar>
       <Box sx={{flexGrow: 1}}>
         <Typography color="secondary" variant="h4" component="div"
