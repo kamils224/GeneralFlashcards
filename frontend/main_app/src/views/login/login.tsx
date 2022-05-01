@@ -6,6 +6,7 @@ import {LoginForm} from "forms/loginForm";
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "routes/routeNames";
 
+
 export const LoginView = () => {
   const navigate = useNavigate();
   const handleLoginSuccess = useCallback(() => {
