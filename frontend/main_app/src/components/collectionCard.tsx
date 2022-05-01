@@ -3,8 +3,8 @@ import {Divider, Button, Typography, Stack, Paper} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 
 const boxStyle = {
-  height: 250,
-  width: 400,
+  height: 300,
+  width: 350,
   backgroundColor: Colors.backgroundSecondary,
   boxShadow: 5,
   borderRadius: 5,
@@ -32,7 +32,7 @@ export const CollectionCard = (props: any) => {
       <Divider/>
       <Typography variant="h6" sx={textStyle}>{props.description}</Typography>
       <Divider/>
-      <Stack m={2} spacing={2} direction="row" justifyContent="center">
+      <Stack m={2} p={2} spacing={2} direction="row" justifyContent="center" alignItems="flex-end">
         <Button variant="contained" color="primary">
             Start learning
         </Button>

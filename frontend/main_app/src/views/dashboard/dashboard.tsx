@@ -5,7 +5,7 @@ import {CollectionCard} from "components/collectionCard";
 
 export const DashboardView = () => {
   return (
-    <Grid container spacing={2} p={3}>
+    <Grid container spacing={3} p={2}>
       <Grid item>
         <CollectionCard title="Title" description="Progress: 0/0"/>
       </Grid>
