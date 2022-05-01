@@ -1,8 +1,7 @@
 import React, {useCallback} from "react";
 import {Box, Grid} from "@mui/material";
 import Colors from "styles/colors.module.scss";
-import styles from "./login.module.scss";
-
+import styles from "views/login/login.module.scss";
 import {LoginForm} from "forms/loginForm";
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "routes/routeNames";

@@ -1,8 +1,8 @@
-$background-white: white;
 $background-primary: #dbffbe;
+$background-secondary: white;
 
 
 :export {
-  backgroundSecondary: $background-white;
+  backgroundSecondary: $background-secondary;
   backgroundPrimary: $background-primary;
 }
