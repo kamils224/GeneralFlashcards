@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import {Box, Grid} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import styles from "./login.module.scss";
@@ -9,9 +9,9 @@ import {RouteNames} from "routes/routeNames";
 
 export const LoginView = () => {
   const navigate = useNavigate();
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = useCallback(() => {
     navigate(RouteNames.dashboard, {replace: true});
-  };
+  }, []);
 
   return (
     <Grid container
