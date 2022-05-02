@@ -23,14 +23,12 @@ export const DashboardView = () => {
   if (pending) {
     return collectionLoadingView;
   }
-  console.log(collections);
 
   return (
     <Grid container spacing={3} p={2} alignItems="center" justifyContent="center">
       {collections.map((data: CollectionDto) => {
         return <Grid item key={data.id}>
-          <CollectionCard title={data.title}
-            description={data.description} created={data.dateCreated}/>
+          <CollectionCard model={data} />
         </Grid>;
       })}
     </Grid>

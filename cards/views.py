@@ -1,19 +1,22 @@
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 
 from cards.models import FlashcardsCollection, Flashcard
 from cards.permissions import IsOwnerOrReadOnly, IsCollectionOwner
 from cards.serializers import FlashcardsCollectionSerializer, FlashcardSerializer
-
-from rest_framework.reverse import reverse, reverse_lazy
 
 
 class FlashcardsCollectionViewSet(viewsets.ModelViewSet):
     queryset = FlashcardsCollection.objects.filter(is_public=True)
     serializer_class = FlashcardsCollectionSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
+    def list(self, request, *args, pk=None, **kwargs):
+        queryset = self.get_queryset()
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     @action(
         methods=["get"],

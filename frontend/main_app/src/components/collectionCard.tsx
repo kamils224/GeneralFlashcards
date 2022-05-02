@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {Divider, Button, Typography, Stack, Paper} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import {InfoButton} from "components/buttons/infoButton";
+import {CollectionDto} from "../api/collections.api";
 
 const boxStyle = {
   height: 400,
@@ -37,12 +38,10 @@ const dateStyle = {
 };
 
 type Props = {
-    title: string,
-    description: string,
-    created: Date,
+    model: CollectionDto,
 }
 
-export const CollectionCard = (props: Props) => {
+export const CollectionCard = ({model}: Props) => {
   const [showDescription, setShowDescription] = useState(false);
   const switchContent = () => {
     setShowDescription(!showDescription);
@@ -52,12 +51,12 @@ export const CollectionCard = (props: Props) => {
     <Stack alignItems="center" sx={mainContentStyle}>
       {showDescription ?
           <>
-            <InfoButton variant="text" color="info" onClick={switchContent}>Show progress</InfoButton>
-            <Typography variant="h6" sx={textStyle}>Description</Typography>
+            <InfoButton variant="text" color="info" onClick={switchContent}>Show info</InfoButton>
+            <Typography variant="h6" sx={textStyle}>{model.description}</Typography>
           </> :
           <>
             <InfoButton variant="text" color="info" onClick={switchContent}>Show description</InfoButton>
-            <Typography variant="h6" sx={textStyle}>COMPUTE PROGRESS HERE</Typography>
+            <Typography variant="h6" sx={textStyle}>Items: {model.flashcardsCount}</Typography>
           </>}
     </Stack>
   );
@@ -65,13 +64,13 @@ export const CollectionCard = (props: Props) => {
   return (
     <Paper sx={boxStyle}>
       <Typography variant="h4" sx={titleStyle}>
-        {props.title}
+        {model.title}
       </Typography>
       <Divider/>
       {mainContent}
       <Divider/>
       <Typography variant="h6" sx={dateStyle}>
-                Created:&nbsp; {props.created.toLocaleDateString()}
+                Created:&nbsp; {model.dateCreated.toLocaleDateString()}
       </Typography>
       <Stack m={0} p={2} spacing={2} direction="row" justifyContent="center" alignItems="flex-end">
         <Button variant="contained" color="primary">

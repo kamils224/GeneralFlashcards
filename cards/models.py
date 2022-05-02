@@ -11,6 +11,10 @@ class FlashcardsCollection(models.Model):
     date_created = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=False)
 
+    @property
+    def flashcards_count(self):
+        return self.flashcards.count()
+
     class Meta:
         unique_together = ("title", "owner")
 

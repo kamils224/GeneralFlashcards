@@ -4,7 +4,7 @@ import {ApiGetError} from "./errors.api";
 export class CollectionDto {
   constructor(public id: number, public title: string,
               public description: string, public dateCreated: Date,
-              public isPublic: boolean,
+              public isPublic: boolean, public flashcardsCount: number,
   ) {}
   public static fromResponse(data: Record<string, any>) : CollectionDto {
     return new CollectionDto(
@@ -13,6 +13,7 @@ export class CollectionDto {
         data.description,
         new Date(data.date_created),
         data.is_public,
+        data.flashcards_count,
     );
   }
 }
