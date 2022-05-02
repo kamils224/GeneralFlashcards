@@ -13,11 +13,6 @@ class FlashcardsCollectionViewSet(viewsets.ModelViewSet):
     serializer_class = FlashcardsCollectionSerializer
     permission_classes = [IsOwnerOrReadOnly]
 
-    def list(self, request, *args, pk=None, **kwargs):
-        queryset = self.get_queryset()
-        serializer = self.get_serializer(queryset, many=True)
-        return Response(serializer.data)
-
     @action(
         methods=["get"],
         detail=True,
