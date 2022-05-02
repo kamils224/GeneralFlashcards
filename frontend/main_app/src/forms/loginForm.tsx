@@ -48,10 +48,11 @@ export const LoginForm: React.FC<Props> = (props) => {
 
   const renderForm = () => {
     if (pending) {
-      return <CircularLoading style={{marginTop: "40%"}}/>;
+      return <Stack m={5} justifyContent="center" alignItems="stretch"
+        height={350}><CircularLoading text="Loading"/></Stack>;
     }
     return <form onSubmit={submitLogin}>
-      <Stack m={5} justifyContent="center" spacing={2}>
+      <Stack height={350} m={5} alignItems="stretch" justifyContent="center" spacing={2}>
         <TextField error={!!error}
           inputRef={emailInput}
           label="Email" variant="outlined"
