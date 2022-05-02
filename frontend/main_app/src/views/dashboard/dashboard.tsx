@@ -11,7 +11,8 @@ export const DashboardView = () => {
     flashcardsApi.getCollections().then((r) => console.log(r));
   }, []);
 
-  const loadingCircle = <CircularLoading variant="h6" text="Loading" size={80} style={{minHeight: "80vh"}}/>;
+  const loadingCircle = <CircularLoading textVariant="h6"
+    text="Loading" size={80} style={{minHeight: "80vh"}}/>;
   const mainContent = (
     <><Grid item>
       <CollectionCard title="Title" description="Progress: 0/0"/>

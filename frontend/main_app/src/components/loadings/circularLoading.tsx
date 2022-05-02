@@ -7,7 +7,7 @@ type Props = {
   className?: string;
   size?: number;
   text?: string;
-  variant?: "h1"|"h2"|"h3"|"h4"|"h5"|"h6"
+  textVariant?: "h1"|"h2"|"h3"|"h4"|"h5"|"h6"
 }
 
 export const CircularLoading = (props: Props) => {
@@ -15,7 +15,7 @@ export const CircularLoading = (props: Props) => {
     className={`${props.className} ${styles.circularLoading}`}>
     <div style={{display: "block", textAlign: "center"}}>
       <CircularProgress size={props.size} color="primary"/>
-      <Typography color="primary" variant={props.variant}>{props.text}</Typography>
+      <Typography color="primary" variant={props.textVariant}>{props.text}</Typography>
     </div>
   </div>;
 };

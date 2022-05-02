@@ -1,5 +1,5 @@
 import {Button, Divider, Stack, TextField} from "@mui/material";
-import React, {FormEvent, Fragment, useEffect, useRef} from "react";
+import React, {FormEvent, useEffect, useRef} from "react";
 import authAPI, {AuthTokens} from "services/auth.api";
 import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
@@ -67,7 +67,7 @@ export const LoginForm: React.FC<Props> = (props) => {
     </form>;
   };
 
-  return <Fragment>
+  return <>
     {renderForm()}
-  </Fragment>;
+  </>;
 };

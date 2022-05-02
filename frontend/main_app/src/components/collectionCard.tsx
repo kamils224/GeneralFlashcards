@@ -1,4 +1,4 @@
-import React, {useState, Fragment} from "react";
+import React, {useState} from "react";
 import {Divider, Button, Typography, Stack, Paper} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import {InfoButton} from "components/buttons/infoButton";
@@ -44,14 +44,14 @@ export const CollectionCard = (props: Props) => {
   const mainContent = (
     <Stack alignItems="center" sx={mainContentStyle}>
       {showDescription ?
-          <Fragment>
+          <>
             <InfoButton variant="text" color="info" onClick={switchContent}>Show progress</InfoButton>
             <Typography variant="h6" sx={textStyle}>Description</Typography>
-          </Fragment> :
-          <Fragment>
+          </> :
+          <>
             <InfoButton variant="text" color="info" onClick={switchContent}>Show description</InfoButton>
             <Typography variant="h6" sx={textStyle}>Progress: 0/0</Typography>
-          </Fragment>}
+          </>}
     </Stack>
   );
 
