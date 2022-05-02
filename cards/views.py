@@ -18,11 +18,11 @@ class FlashcardsCollectionViewSet(viewsets.ModelViewSet):
     @action(
         methods=["get"],
         detail=True,
-        url_path="items",
-        url_name="items",
+        url_path="flashcards",
+        url_name="flashcards",
         permission_classes=[IsAuthenticated],
     )
-    def get_items(self, request, pk=None):
+    def get_flashcards(self, request, pk=None):
         collection = FlashcardsCollection.objects.get(pk=pk)
         serializer = FlashcardSerializer(collection.flashcards.all(), many=True)
         return Response(serializer.data)
@@ -30,8 +30,8 @@ class FlashcardsCollectionViewSet(viewsets.ModelViewSet):
     @action(
         methods=["get"],
         detail=False,
-        url_path="user",
-        url_name="user",
+        url_path="user-collections",
+        url_name="user-collections",
         permission_classes=[IsAuthenticated],
     )
     def get_user_collections(self, request):

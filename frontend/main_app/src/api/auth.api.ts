@@ -1,5 +1,5 @@
 import axios from "axiosInstance";
-import {LoginError} from "services/errors.api";
+import {LoginError} from "api/errors.api";
 
 
 export interface LoginPayload {

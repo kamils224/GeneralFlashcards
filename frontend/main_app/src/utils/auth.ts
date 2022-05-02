@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
-import AuthAPI, {AuthTokens} from "services/auth.api";
+import AuthAPI, {AuthTokens} from "api/auth.api";
 
 export interface JwtToken {
   token_type: string;

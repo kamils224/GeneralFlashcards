@@ -21,18 +21,25 @@ const titleStyle = {
   textOverflow: "ellipsis",
 };
 const mainContentStyle = {
-  height: "40%",
-  maxHeight: "40%",
+  height: "35%",
+  maxHeight: "35%",
 };
 const textStyle = {
   textAlign: "center",
   m: 2,
   overflowWrap: "break-word",
 };
+const dateStyle = {
+  color: Colors.info,
+  textAlign: "center",
+  fontSize: ".9rem",
+  fontStyle: "italic",
+};
 
 type Props = {
     title: string,
-    description: string
+    description: string,
+    created: Date,
 }
 
 export const CollectionCard = (props: Props) => {
@@ -50,7 +57,7 @@ export const CollectionCard = (props: Props) => {
           </> :
           <>
             <InfoButton variant="text" color="info" onClick={switchContent}>Show description</InfoButton>
-            <Typography variant="h6" sx={textStyle}>Progress: 0/0</Typography>
+            <Typography variant="h6" sx={textStyle}>COMPUTE PROGRESS HERE</Typography>
           </>}
     </Stack>
   );
@@ -63,7 +70,10 @@ export const CollectionCard = (props: Props) => {
       <Divider/>
       {mainContent}
       <Divider/>
-      <Stack m={2} p={2} spacing={2} direction="row" justifyContent="center" alignItems="flex-end">
+      <Typography variant="h6" sx={dateStyle}>
+                Created:&nbsp; {props.created.toLocaleDateString()}
+      </Typography>
+      <Stack m={0} p={2} spacing={2} direction="row" justifyContent="center" alignItems="flex-end">
         <Button variant="contained" color="primary">
             Start learning
         </Button>

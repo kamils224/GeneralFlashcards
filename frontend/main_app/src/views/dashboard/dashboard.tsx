@@ -1,30 +1,38 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {Grid} from "@mui/material";
 import {CollectionCard} from "components/collectionCard";
-import flashcardsApi from "services/flashcards.api";
+import collectionsApi, {CollectionDto} from "api/collections.api";
 import {CircularLoading} from "components/loadings/circularLoading";
+import useHttp from "../../hooks/useHttp";
 
+const collectionLoadingView = (
+  <Grid container spacing={3} p={2} alignItems="center" justifyContent="center">
+    <CircularLoading textVariant="h6"
+      text="Loading" size={80} style={{minHeight: "80vh"}}/>;
+  </Grid>
+);
 
 export const DashboardView = () => {
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    flashcardsApi.getCollections().then((r) => console.log(r));
-  }, []);
+  const {sendRequest: getCollections, pending, data: collections} =
+      useHttp(collectionsApi.getCollections, true);
 
-  const loadingCircle = <CircularLoading textVariant="h6"
-    text="Loading" size={80} style={{minHeight: "80vh"}}/>;
-  const mainContent = (
-    <><Grid item>
-      <CollectionCard title="Title" description="Progress: 0/0"/>
-    </Grid><Grid item>
-      <CollectionCard title="TitleTitleTitleTitle TitleTitleTitleTitle"
-        description="Progress: 0/0"/>
-    </Grid></>
-  );
+  useEffect(() => {
+    getCollections();
+  }, [getCollections]);
+
+  if (pending) {
+    return collectionLoadingView;
+  }
+  console.log(collections);
 
   return (
     <Grid container spacing={3} p={2} alignItems="center" justifyContent="center">
-      {loading ? loadingCircle : mainContent}
+      {collections.map((data: CollectionDto) => {
+        return <Grid item key={data.id}>
+          <CollectionCard title={data.title}
+            description={data.description} created={data.dateCreated}/>
+        </Grid>;
+      })}
     </Grid>
   );
 };

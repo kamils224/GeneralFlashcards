@@ -1,6 +1,6 @@
 import {Button, Divider, Stack, TextField} from "@mui/material";
 import React, {FormEvent, useEffect, useRef} from "react";
-import authAPI, {AuthTokens} from "services/auth.api";
+import authAPI, {AuthTokens} from "api/auth.api";
 import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
 import {saveAuthData} from "redux-store/slices/authSlice";
