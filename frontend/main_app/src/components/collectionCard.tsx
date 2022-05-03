@@ -5,23 +5,26 @@ import {InfoButton} from "components/buttons/infoButton";
 import {CollectionDto} from "../api/collections.api";
 
 const boxStyle = {
-  height: 300,
-  width: 350,
-  backgroundColor: Colors.backgroundSecondary,
-  boxShadow: 5,
-  borderRadius: 5,
+  "height": 300,
+  "width": 350,
+  "backgroundColor": Colors.backgroundSecondary,
+  "boxShadow": 5,
+  "borderRadius": 5,
+  "&:hover": {
+    backgroundColor: Colors.backgroundInfo,
+  },
 };
 const titleStyle = {
-  fontWeight: "bold",
-  textAlign: "center",
-  alignSelf: "center",
-  justifySelf: "center",
-  p: 1,
-  height: "25%",
-  overflowWrap: "break-word",
-  overflow: "auto",
-  textOverflow: "ellipsis",
-  wordBreak: "break-word",
+  "fontWeight": "bold",
+  "textAlign": "center",
+  "alignSelf": "center",
+  "justifySelf": "center",
+  "p": 1,
+  "height": "25%",
+  "overflowWrap": "break-word",
+  "overflow": "auto",
+  "textOverflow": "ellipsis",
+  "wordBreak": "break-word",
 };
 const mainContentStyle = {
   height: "40%",

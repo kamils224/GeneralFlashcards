@@ -1,5 +1,6 @@
 $background-primary: #dbffbe;
 $background-secondary: white;
+$background-info: #eaf1ff;
 
 $primary: #35803b;
 $secondary: #f1c40f;
@@ -8,6 +9,7 @@ $info: #696969;
 :export {
   backgroundSecondary: $background-secondary;
   backgroundPrimary: $background-primary;
+  backgroundInfo: $background-info;
   primary: $primary;
   secondary: $secondary;
   info: $info;
