@@ -1,5 +1,5 @@
 import React, {useEffect} from "react";
-import {Grid} from "@mui/material";
+import {Grid, useMediaQuery, useTheme} from "@mui/material";
 import {CollectionCard} from "components/collectionCard";
 import collectionsApi, {CollectionDto} from "api/collections.api";
 import {CircularLoading} from "components/loadings/circularLoading";
@@ -13,6 +13,7 @@ const collectionLoadingView = (
 );
 
 export const DashboardView = () => {
+  const isMobile = useMediaQuery(useTheme().breakpoints.down("md"));
   const {sendRequest: getCollections, pending, data: collections} =
       useHttp(collectionsApi.getCollections, true);
 
@@ -25,7 +26,8 @@ export const DashboardView = () => {
   }
 
   return (
-    <Grid container spacing={3} p={2} alignItems="center" justifyContent="center">
+    <Grid container pl={2} pr={2} spacing={2}
+      direction="column" alignItems={isMobile ? "center": "left"} justifyContent="center">
       {collections.map((data: CollectionDto) => {
         return <Grid item key={data.id}>
           <CollectionCard model={data} />

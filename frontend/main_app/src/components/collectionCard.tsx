@@ -5,35 +5,41 @@ import {InfoButton} from "components/buttons/infoButton";
 import {CollectionDto} from "../api/collections.api";
 
 const boxStyle = {
-  height: 400,
+  height: 300,
   width: 350,
   backgroundColor: Colors.backgroundSecondary,
   boxShadow: 5,
   borderRadius: 5,
 };
 const titleStyle = {
+  fontWeight: "bold",
   textAlign: "center",
   alignSelf: "center",
   justifySelf: "center",
-  p: 2,
+  p: 1,
   height: "25%",
   overflowWrap: "break-word",
   overflow: "auto",
   textOverflow: "ellipsis",
+  wordBreak: "break-word",
 };
 const mainContentStyle = {
-  height: "35%",
-  maxHeight: "35%",
+  height: "40%",
 };
 const textStyle = {
   textAlign: "center",
-  m: 2,
+  marginRight: "5%",
+  marginLeft: "5%",
   overflowWrap: "break-word",
+  overflow: "auto",
+  textOverflow: "ellipsis",
+  wordBreak: "break-word",
+  fontSize: ".9rem",
 };
 const dateStyle = {
   color: Colors.info,
   textAlign: "center",
-  fontSize: ".9rem",
+  fontSize: ".8rem",
   fontStyle: "italic",
 };
 
@@ -48,14 +54,14 @@ export const CollectionCard = ({model}: Props) => {
   };
 
   const mainContent = (
-    <Stack alignItems="center" sx={mainContentStyle}>
+    <Stack spacing={0} alignItems="center" sx={mainContentStyle}>
       {showDescription ?
           <>
-            <InfoButton variant="text" color="info" onClick={switchContent}>Show info</InfoButton>
+            <InfoButton size="small" variant="text" color="info" onClick={switchContent}>Show info</InfoButton>
             <Typography variant="h6" sx={textStyle}>{model.description}</Typography>
           </> :
           <>
-            <InfoButton variant="text" color="info" onClick={switchContent}>Show description</InfoButton>
+            <InfoButton size="small" variant="text" color="info" onClick={switchContent}>Show description</InfoButton>
             <Typography variant="h6" sx={textStyle}>Items: {model.flashcardsCount}</Typography>
           </>}
     </Stack>
@@ -63,7 +69,7 @@ export const CollectionCard = ({model}: Props) => {
 
   return (
     <Paper sx={boxStyle}>
-      <Typography variant="h4" sx={titleStyle}>
+      <Typography variant="h6" sx={titleStyle}>
         {model.title}
       </Typography>
       <Divider/>
@@ -73,10 +79,10 @@ export const CollectionCard = ({model}: Props) => {
                 Created:&nbsp; {model.dateCreated.toLocaleDateString()}
       </Typography>
       <Stack m={0} p={2} spacing={2} direction="row" justifyContent="center" alignItems="flex-end">
-        <Button variant="contained" color="primary">
+        <Button size="small" variant="contained" color="primary">
             Start learning
         </Button>
-        <Button variant="contained" color="secondary">
+        <Button size="small" variant="contained" color="secondary">
             Show collection
         </Button>
       </Stack>
