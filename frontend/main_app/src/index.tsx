@@ -20,6 +20,9 @@ const theme = createTheme(
       info: {
         main: Colors.info,
       },
+      error: {
+        main: Colors.error,
+      },
     }},
 );
 

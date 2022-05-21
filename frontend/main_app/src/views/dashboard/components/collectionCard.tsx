@@ -3,16 +3,15 @@ import {Divider, Button, Typography, Stack, Paper} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import {InfoButton} from "components/buttons/infoButton";
 import {CollectionDto} from "api/collections.api";
+import DeleteIcon from "@mui/icons-material/Delete";
 
 const boxStyle = {
+  "position": "relative",
   "height": 300,
   "width": 350,
   "backgroundColor": Colors.backgroundSecondary,
   "boxShadow": 5,
   "borderRadius": 5,
-  "&:hover": {
-    backgroundColor: Colors.backgroundInfo,
-  },
 };
 const titleStyle = {
   "fontWeight": "bold",
@@ -25,6 +24,8 @@ const titleStyle = {
   "overflow": "auto",
   "textOverflow": "ellipsis",
   "wordBreak": "break-word",
+  "marginLeft": 2,
+  "marginRight": 2,
 };
 const mainContentStyle = {
   height: "40%",
@@ -44,6 +45,11 @@ const dateStyle = {
   textAlign: "center",
   fontSize: ".8rem",
   fontStyle: "italic",
+};
+const removeButtonStyle = {
+  "position": "absolute",
+  "left": "80%",
+  "top": "2%",
 };
 
 type Props = {
@@ -72,6 +78,7 @@ export const CollectionCard = ({model}: Props) => {
 
   return (
     <Paper sx={boxStyle}>
+      <Button sx={removeButtonStyle} color="error"><DeleteIcon/></Button>
       <Typography variant="h6" sx={titleStyle}>
         {model.title}
       </Typography>

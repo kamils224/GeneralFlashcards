@@ -4,6 +4,7 @@ import {CollectionCard} from "views/dashboard/components/collectionCard";
 import collectionsApi, {CollectionDto} from "api/collections.api";
 import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
+import {ActionsBar} from "views/dashboard/components/ActionsBar";
 
 const collectionLoadingView = (
   <Grid container spacing={3} p={2} alignItems="center" justifyContent="center">
@@ -26,13 +27,16 @@ export const DashboardView = () => {
   }
 
   return (
-    <Grid container pl={2} pr={2} spacing={2}
-      direction="column" alignItems={isMobile ? "center": "left"} justifyContent="center">
-      {collections.map((data: CollectionDto) => {
-        return <Grid item key={data.id}>
-          <CollectionCard model={data} />
-        </Grid>;
-      })}
-    </Grid>
+    <>
+      <Grid container pl={2} pr={2} spacing={2}
+        direction={isMobile ? "column": "row"} alignItems="center" justifyContent="center">
+        {collections.map((data: CollectionDto) => {
+          return <Grid item key={data.id}>
+            <CollectionCard model={data} />
+          </Grid>;
+        })}
+      </Grid>
+      <ActionsBar/>
+    </>
   );
 };
