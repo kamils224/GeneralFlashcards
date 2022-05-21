@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {Divider, Button, Typography, Stack, Paper} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import {InfoButton} from "components/buttons/infoButton";
-import {CollectionDto} from "../api/collections.api";
+import {CollectionDto} from "api/collections.api";
 
 const boxStyle = {
   "height": 300,

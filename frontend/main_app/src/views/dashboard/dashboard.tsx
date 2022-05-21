@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import {Grid, useMediaQuery, useTheme} from "@mui/material";
-import {CollectionCard} from "components/collectionCard";
+import {CollectionCard} from "views/dashboard/components/collectionCard";
 import collectionsApi, {CollectionDto} from "api/collections.api";
 import {CircularLoading} from "components/loadings/circularLoading";
-import useHttp from "../../hooks/useHttp";
+import useHttp from "hooks/useHttp";
 
 const collectionLoadingView = (
   <Grid container spacing={3} p={2} alignItems="center" justifyContent="center">
