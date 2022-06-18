@@ -1,10 +1,11 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {Grid, useMediaQuery, useTheme} from "@mui/material";
 import {CollectionCard} from "views/dashboard/components/collectionCard";
 import collectionsApi, {CollectionDto} from "api/collections.api";
 import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
-import {ActionsBar} from "views/dashboard/components/ActionsBar";
+import {ActionItem, ActionsBar} from "views/dashboard/components/actionsBar";
+import {CollectionFormModal} from "../../modals/collectionFormModal";
 
 const collectionLoadingView = (
   <Grid container spacing={3} p={2} alignItems="center" justifyContent="center">
@@ -17,6 +18,16 @@ export const DashboardView = () => {
   const isMobile = useMediaQuery(useTheme().breakpoints.down("md"));
   const {sendRequest: getCollections, pending, data: collections} =
       useHttp(collectionsApi.getCollections, true);
+  const [collectionModalOpen, setCollectionModalOpen] = useState(false);
+
+  const actions = useMemo(() => [
+    {
+      title: "Add new collection",
+      onClick: () => {
+        setCollectionModalOpen(true);
+      },
+    } as ActionItem,
+  ], []);
 
   useEffect(() => {
     getCollections();
@@ -36,7 +47,11 @@ export const DashboardView = () => {
           </Grid>;
         })}
       </Grid>
-      <ActionsBar/>
+      <ActionsBar actionItems={actions}/>
+      <CollectionFormModal
+        open={collectionModalOpen}
+        onClose={()=> setCollectionModalOpen(false)}
+      />
     </>
   );
 };

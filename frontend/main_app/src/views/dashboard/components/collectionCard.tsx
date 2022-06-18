@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Divider, Button, Typography, Stack, Paper} from "@mui/material";
+import {Divider, Button, Typography, Stack, Paper, Tooltip} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import {InfoButton} from "components/buttons/infoButton";
 import {CollectionDto} from "api/collections.api";
@@ -50,6 +50,9 @@ const removeButtonStyle = {
   "position": "absolute",
   "left": "80%",
   "top": "2%",
+  "&:hover": {
+    "backgroundColor": Colors.backgroundInfo,
+  },
 };
 
 type Props = {
@@ -76,9 +79,22 @@ export const CollectionCard = ({model}: Props) => {
     </Stack>
   );
 
+  const actionsGroup = (
+    <Stack m={0} p={2} spacing={2} direction="row" justifyContent="center" alignItems="flex-end">
+      <Button size="small" variant="contained" color="primary">
+            Start learning
+      </Button>
+      <Button size="small" variant="contained" color="secondary">
+            Edit collection
+      </Button>
+    </Stack>
+  );
+
   return (
     <Paper sx={boxStyle}>
-      <Button sx={removeButtonStyle} color="error"><DeleteIcon/></Button>
+      <Tooltip arrow placement="bottom" title="Delete collection">
+        <Button sx={removeButtonStyle as any} color="info"><DeleteIcon/></Button>
+      </Tooltip>
       <Typography variant="h6" sx={titleStyle}>
         {model.title}
       </Typography>
@@ -88,14 +104,7 @@ export const CollectionCard = ({model}: Props) => {
       <Typography variant="h6" sx={dateStyle}>
                 Created:&nbsp; {model.dateCreated.toLocaleDateString()}
       </Typography>
-      <Stack m={0} p={2} spacing={2} direction="row" justifyContent="center" alignItems="flex-end">
-        <Button size="small" variant="contained" color="primary">
-            Start learning
-        </Button>
-        <Button size="small" variant="contained" color="secondary">
-            Show collection
-        </Button>
-      </Stack>
+      {actionsGroup}
     </Paper>
   );
 };
