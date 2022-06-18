@@ -1,9 +1,10 @@
 import React, {useState} from "react";
-import {Divider, Button, Typography, Stack, Paper, Tooltip} from "@mui/material";
+import {Divider, Button, Typography, Stack, Paper} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import {InfoButton} from "components/buttons/infoButton";
 import {CollectionDto} from "api/collections.api";
 import DeleteIcon from "@mui/icons-material/Delete";
+import {CustomIconButton} from "components/buttons/customIconButton";
 
 const boxStyle = {
   "position": "relative",
@@ -46,14 +47,6 @@ const dateStyle = {
   fontSize: ".8rem",
   fontStyle: "italic",
 };
-const removeButtonStyle = {
-  "position": "absolute",
-  "left": "80%",
-  "top": "2%",
-  "&:hover": {
-    "backgroundColor": Colors.backgroundInfo,
-  },
-};
 
 type Props = {
     model: CollectionDto,
@@ -90,11 +83,14 @@ export const CollectionCard = ({model}: Props) => {
     </Stack>
   );
 
+  const handleRemoveCollection = () => {
+    console.log("Remove collection");
+  };
+
   return (
     <Paper sx={boxStyle}>
-      <Tooltip arrow placement="bottom" title="Delete collection">
-        <Button sx={removeButtonStyle as any} color="info"><DeleteIcon/></Button>
-      </Tooltip>
+      <CustomIconButton onClick={handleRemoveCollection}
+        icon={<DeleteIcon/>} color="info" tooltipText={"Delete collection"}/>
       <Typography variant="h6" sx={titleStyle}>
         {model.title}
       </Typography>

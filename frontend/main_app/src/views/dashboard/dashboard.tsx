@@ -5,7 +5,7 @@ import collectionsApi, {CollectionDto} from "api/collections.api";
 import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
 import {ActionItem, ActionsBar} from "views/dashboard/components/actionsBar";
-import {CollectionFormModal} from "../../modals/collectionFormModal";
+import {CollectionFormModal} from "modals/collectionFormModal";
 
 const collectionLoadingView = (
   <Grid container spacing={3} p={2} alignItems="center" justifyContent="center">
