@@ -1,5 +1,5 @@
 import axios from "axiosInstance";
-import {ApiCreateError, ApiGetError} from "./errors.api";
+import {ApiCreateError, ApiGetError} from "api/errors.api";
 
 export class CollectionDto {
   constructor(public id: number, public title: string,
