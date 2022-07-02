@@ -6,7 +6,7 @@ from cards import views
 app_name = "cards"
 
 router = DefaultRouter()
-router.register("collection", views.FlashcardsCollectionViewSet, basename="collection")
+router.register("collections", views.FlashcardsCollectionViewSet, basename="collections")
 router.register("flashcards", views.FlashcardViewSet, basename="flashcards")
 
 urlpatterns = [path("", include(router.urls))]

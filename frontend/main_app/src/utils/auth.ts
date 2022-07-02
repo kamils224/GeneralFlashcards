@@ -1,6 +1,6 @@
 import Cookies from "js-cookie";
 import jwtDecode from "jwt-decode";
-import AuthAPI, {AuthTokens} from "services/auth.api";
+import AuthAPI, {AuthTokens} from "api/auth.api";
 
 export interface JwtToken {
   token_type: string;
@@ -20,9 +20,16 @@ export const setupJwtTokens = async (): Promise<AuthTokens | null> => {
   const refreshToken = Cookies.get("refreshToken");
 
   if (token && refreshToken) {
-    const decodedRefreshToken = jwtDecode<JwtToken>(refreshToken);
-    const decodedToken = jwtDecode<JwtToken>(token);
-
+    let decodedRefreshToken = null;
+    let decodedToken = null;
+    try {
+      decodedRefreshToken = jwtDecode<JwtToken>(refreshToken);
+      decodedToken = jwtDecode<JwtToken>(token);
+    } catch {
+      Cookies.remove("token");
+      Cookies.remove("refreshToken");
+      return null;
+    }
     const refreshTokenExpiration = decodedRefreshToken.exp * 1000;
     const tokenExpiration = decodedToken.exp * 1000;
     const tokenRefreshDate = Date.now();

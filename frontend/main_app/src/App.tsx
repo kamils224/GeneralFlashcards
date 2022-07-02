@@ -1,4 +1,4 @@
-import React, {Fragment} from "react";
+import React from "react";
 import "App.scss";
 import {Route, Routes} from "react-router-dom";
 import {LoginView} from "views/login/login";
@@ -15,7 +15,7 @@ function App() {
   useRefreshAuthTokens();
 
   return (
-    <Fragment>
+    <>
       <NavigationBar />
       <Container disableGutters maxWidth={false}>
         <Routes>
@@ -27,7 +27,7 @@ function App() {
           </Route>
         </Routes>
       </Container>
-    </Fragment>
+    </>
   );
 }
 

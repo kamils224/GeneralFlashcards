@@ -4,15 +4,16 @@ from django.db import models
 
 class FlashcardsCollection(models.Model):
     title = models.CharField(max_length=100)
-    description = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, blank=True)
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="collections", on_delete=models.CASCADE
     )
     date_created = models.DateTimeField(auto_now_add=True)
     is_public = models.BooleanField(default=False)
 
-    class Meta:
-        unique_together = ("title", "owner")
+    @property
+    def flashcards_count(self):
+        return self.flashcards.count()
 
     def __str__(self):
         return self.title

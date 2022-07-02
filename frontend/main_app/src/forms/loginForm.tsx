@@ -1,36 +1,26 @@
 import {Button, Divider, Stack, TextField} from "@mui/material";
-import React, {FormEvent, Fragment, useEffect, useRef} from "react";
-import AuthAPI, {AuthTokens} from "services/auth.api";
-import {CircularLoading} from "components/loadings/circularLoading";
-import useHttp from "hooks/useHttp";
-import {saveAuthData} from "redux-store/slices/authSlice";
-import {useAppDispatch} from "redux-store/hooks";
+import React, {FormEvent, useRef} from "react";
 
-
-type Props = {
-  onSuccess: () => void;
+export interface LoginFormData {
+  email?: string;
+  password?: string;
 }
 
-export const LoginForm: React.FC<Props> = (props) => {
+type Props = {
+  onSubmit: (payload: LoginFormData) => void;
+  error?: string;
+}
+
+export const LoginForm: React.FC<Props> = (props: Props) => {
   const emailInput = useRef<HTMLInputElement>(null);
   const passwordInput = useRef<HTMLInputElement>(null);
-  const dispatch = useAppDispatch();
-  const {onSuccess} = props;
-  const {sendRequest: sendLoginRequest, pending, data: tokens, error} =
-      useHttp<AuthTokens>(AuthAPI.getAuthTokens, false);
+
+  const {error, onSubmit} = props;
+
   const validateInput = ():boolean => {
     return !!(emailInput.current?.value && passwordInput.current?.value);
   };
-  const handleLogin = () => {
-    if (tokens) {
-      const authData = {
-        token: tokens?.token,
-        refreshToken: tokens?.refreshToken,
-      };
-      dispatch(saveAuthData(authData));
-      onSuccess();
-    }
-  };
+
   const submitLogin = (event: FormEvent) => {
     event.preventDefault();
     if (!validateInput()) {
@@ -41,17 +31,12 @@ export const LoginForm: React.FC<Props> = (props) => {
       email: emailInput.current?.value,
       password: passwordInput.current?.value,
     };
-    sendLoginRequest(loginPayload);
+    onSubmit(loginPayload);
   };
 
-  useEffect(handleLogin, [tokens]);
-
   const renderForm = () => {
-    if (pending) {
-      return <CircularLoading style={{marginTop: "40%"}}/>;
-    }
     return <form onSubmit={submitLogin}>
-      <Stack m={5} justifyContent="center" spacing={2}>
+      <Stack height={350} m={5} alignItems="stretch" justifyContent="center" spacing={2}>
         <TextField error={!!error}
           inputRef={emailInput}
           label="Email" variant="outlined"
@@ -67,7 +52,7 @@ export const LoginForm: React.FC<Props> = (props) => {
     </form>;
   };
 
-  return <Fragment>
+  return <>
     {renderForm()}
-  </Fragment>;
+  </>;
 };

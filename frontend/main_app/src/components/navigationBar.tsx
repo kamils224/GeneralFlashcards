@@ -1,12 +1,12 @@
-import React, {Fragment} from "react";
-import {AppBar, Box, Button, Container, Toolbar, Typography} from "@mui/material";
+import React from "react";
+import {AppBar, Box, Button, Toolbar, Typography} from "@mui/material";
 import {useAppDispatch, useAppSelector} from "redux-store/hooks";
 import {selectIsAuthenticated} from "redux-store/selectors/authSelectors";
 import {removeAuthData} from "redux-store/slices/authSlice";
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "routes/routeNames";
 
-export const NavigationBar: React.FC<React.ReactNode> = (props ) => {
+export const NavigationBar: React.FC<React.ReactNode> = () => {
   const titleStyle = {textShadow: "1px 1px black"};
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const dispatch = useAppDispatch();
@@ -17,7 +17,7 @@ export const NavigationBar: React.FC<React.ReactNode> = (props ) => {
     navigate(RouteNames.login, {replace: true});
   };
 
-  return <AppBar position="sticky" sx={{boxShadow: 3}}>
+  return <AppBar position="sticky" sx={{boxShadow: 5, margin: 0, marginBottom: 3}}>
     <Toolbar>
       <Box sx={{flexGrow: 1}}>
         <Typography color="secondary" variant="h4" component="div"

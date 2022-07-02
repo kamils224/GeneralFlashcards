@@ -1,8 +1,20 @@
-$background-white: white;
-$background-primary: #dbffbe;
+$background-primary: #e9ffd6;
+$background-secondary: white;
+$background-info: #cecece;
+$background-error: #ff9090;
 
+$primary: #35803b;
+$secondary: #f1c40f;
+$info: #696969;
+$error: #9b1818;
 
 :export {
-  backgroundSecondary: $background-white;
+  backgroundSecondary: $background-secondary;
   backgroundPrimary: $background-primary;
+  backgroundInfo: $background-info;
+  backgroundError: $background-error;
+  primary: $primary;
+  secondary: $secondary;
+  info: $info;
+  error: $error;
 }
