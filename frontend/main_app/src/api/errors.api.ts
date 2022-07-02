@@ -3,6 +3,11 @@ export class ApiGetError implements Error {
   name = "ApiGetError";
 }
 
+export class ApiCreateError implements Error {
+  message = "Could not create data";
+  name = "ApiGetError";
+}
+
 export class LoginError implements Error {
   message = "Invalid email or password";
   name = "LoginError";

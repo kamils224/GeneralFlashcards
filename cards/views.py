@@ -38,6 +38,9 @@ class FlashcardsCollectionViewSet(viewsets.ModelViewSet):
         serializer = FlashcardsCollectionSerializer(collections, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
+    def perform_create(self, serializer):
+        return serializer.save(owner=self.request.user)
+
 
 class FlashcardViewSet(viewsets.ModelViewSet):
     queryset = Flashcard.objects.all()

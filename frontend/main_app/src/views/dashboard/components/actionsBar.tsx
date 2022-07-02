@@ -7,8 +7,7 @@ const navigationStyle = {
   width: "100%",
   position: "fixed",
   bottom: 0,
-  backgroundColor: Colors.background,
-  borderTop: "solid black 2px",
+  backgroundColor: Colors.primary,
 };
 
 const actionStyle = {
@@ -18,7 +17,7 @@ const actionStyle = {
 
 export type ActionItem = {
   title: string,
-  onClick: () => any
+  onClick: () => any,
 }
 
 type Props = {
@@ -27,7 +26,7 @@ type Props = {
 
 const createActionItem = (actionItem: ActionItem): JSX.Element => {
   return <Button key={actionItem.title} sx={actionStyle} size="large"
-    color="primary" variant="contained" onClick={actionItem.onClick}>
+    color="secondary" variant="contained" onClick={actionItem.onClick}>
     {actionItem.title}
   </Button>;
 };

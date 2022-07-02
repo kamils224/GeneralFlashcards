@@ -18,8 +18,8 @@ type Props = {
 export const CustomIconButton = (props: Props) => {
   const style = {
     "position": props.position || "absolute",
-    "right": props.right || "2%",
-    "top": props.top || "2%",
+    "right": props.right || "1%",
+    "top": props.top || "1%",
     "&:hover": {
       "backgroundColor": props.hoverColor || Colors.backgroundInfo,
     },

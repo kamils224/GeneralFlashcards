@@ -1,5 +1,5 @@
 import axios from "axiosInstance";
-import {ApiGetError} from "./errors.api";
+import {ApiCreateError, ApiGetError} from "./errors.api";
 
 export class CollectionDto {
   constructor(public id: number, public title: string,
@@ -18,6 +18,11 @@ export class CollectionDto {
   }
 }
 
+export interface CollectionCreateDto {
+  title: string;
+  description: string;
+}
+
 class CollectionsApi {
   async getCollections() {
     try {
@@ -25,6 +30,14 @@ class CollectionsApi {
       return response.data.map((data: any)=> CollectionDto.fromResponse(data));
     } catch {
       throw new ApiGetError();
+    }
+  }
+  async createCollection(payload: CollectionCreateDto): Promise<CollectionDto> {
+    try {
+      const response = await axios.post("api/collections/", payload);
+      return CollectionDto.fromResponse(response.data);
+    } catch {
+      throw new ApiCreateError();
     }
   }
 }

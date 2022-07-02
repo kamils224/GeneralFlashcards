@@ -4,7 +4,7 @@ from django.db import models
 
 class FlashcardsCollection(models.Model):
     title = models.CharField(max_length=100)
-    description = models.CharField(max_length=255)
+    description = models.CharField(max_length=255, blank=True)
     owner = models.ForeignKey(
         settings.AUTH_USER_MODEL, related_name="collections", on_delete=models.CASCADE
     )
@@ -14,9 +14,6 @@ class FlashcardsCollection(models.Model):
     @property
     def flashcards_count(self):
         return self.flashcards.count()
-
-    class Meta:
-        unique_together = ("title", "owner")
 
     def __str__(self):
         return self.title

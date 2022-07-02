@@ -37,20 +37,23 @@ export const DashboardView = () => {
     return collectionLoadingView;
   }
 
+  const collectionCard = collections.map((data: CollectionDto) => {
+    return <Grid item key={data.id}>
+      <CollectionCard model={data} />
+    </Grid>;
+  });
+
   return (
     <>
       <Grid container pl={2} pr={2} spacing={2}
         direction={isMobile ? "column": "row"} alignItems="center" justifyContent="center">
-        {collections.map((data: CollectionDto) => {
-          return <Grid item key={data.id}>
-            <CollectionCard model={data} />
-          </Grid>;
-        })}
+        {collectionCard}
       </Grid>
       <ActionsBar actionItems={actions}/>
       <CollectionFormModal
         open={collectionModalOpen}
         onClose={()=> setCollectionModalOpen(false)}
+        onSuccess={() => getCollections()}
       />
     </>
   );

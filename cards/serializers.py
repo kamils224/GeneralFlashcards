@@ -10,8 +10,8 @@ class FlashcardSerializer(serializers.ModelSerializer):
 
 
 class FlashcardsCollectionSerializer(serializers.ModelSerializer):
-    flashcards_count = serializers.IntegerField()
+    flashcards_count = serializers.IntegerField(required=False)
 
     class Meta:
         model = FlashcardsCollection
-        fields = "__all__"
+        exclude = ("owner", )
