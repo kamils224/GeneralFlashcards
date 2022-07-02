@@ -5,11 +5,11 @@ import {LoginForm, LoginFormData} from "forms/loginForm";
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "routes/routeNames";
 import {Title} from "components/title";
-import useHttp from "../../hooks/useHttp";
-import authAPI, {AuthTokens} from "../../api/auth.api";
-import {saveAuthData} from "../../redux-store/slices/authSlice";
-import {useAppDispatch} from "../../redux-store/hooks";
-import {CircularLoading} from "../../components/loadings/circularLoading";
+import useHttp from "hooks/useHttp";
+import authAPI, {AuthTokens} from "api/auth.api";
+import {saveAuthData} from "redux-store/slices/authSlice";
+import {useAppDispatch} from "redux-store/hooks";
+import {CircularLoading} from "components/loadings/circularLoading";
 
 const boxStyle = {
   backgroundColor: Colors.backgroundSecondary,
