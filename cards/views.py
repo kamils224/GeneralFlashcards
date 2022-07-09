@@ -39,7 +39,8 @@ class FlashcardsCollectionViewSet(viewsets.ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     def perform_create(self, serializer):
-        return serializer.save(owner=self.request.user)
+        if not self.request.user.is_anonymous:
+            serializer.save(owner=self.request.user)
 
 
 class FlashcardViewSet(viewsets.ModelViewSet):

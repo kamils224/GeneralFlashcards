@@ -26,7 +26,7 @@ export interface CollectionCreatePayload {
 class CollectionsApi {
   async getCollections() {
     try {
-      const response = await axios.get("api/collections/user-collections/");
+      const response = await axios.get("api/collection/user-collections/");
       return response.data.map((data: any)=> CollectionDto.fromResponse(data));
     } catch {
       throw new ApiGetError();
@@ -34,7 +34,7 @@ class CollectionsApi {
   }
   async createCollection(payload: CollectionCreatePayload): Promise<CollectionDto> {
     try {
-      const response = await axios.post("api/collections/", payload);
+      const response = await axios.post("api/collection/", payload);
       return CollectionDto.fromResponse(response.data);
     } catch {
       throw new ApiCreateError();

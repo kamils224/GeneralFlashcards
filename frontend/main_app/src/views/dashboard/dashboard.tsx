@@ -45,7 +45,7 @@ export const DashboardView = () => {
 
   return (
     <>
-      <Grid container pl={2} pr={2} spacing={2}
+      <Grid container pl={2} pr={2} mb={15} spacing={2}
         direction={isMobile ? "column": "row"} alignItems="center" justifyContent="center">
         {collectionCard}
       </Grid>

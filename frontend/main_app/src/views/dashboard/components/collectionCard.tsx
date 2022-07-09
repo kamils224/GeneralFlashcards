@@ -13,6 +13,12 @@ const boxStyle = {
   "backgroundColor": Colors.backgroundSecondary,
   "boxShadow": 5,
   "borderRadius": 5,
+  ["@media (max-width:900px)"]: {
+    width: "550px",
+  },
+  ["@media (max-width:600px)"]: {
+    width: "400px",
+  },
 };
 const titleStyle = {
   "fontWeight": "bold",
@@ -88,7 +94,7 @@ export const CollectionCard = ({model}: Props) => {
   };
 
   return (
-    <Paper sx={boxStyle}>
+    <Paper sx={boxStyle as any}>
       <CustomIconButton onClick={handleRemoveCollection}
         icon={<DeleteIcon/>} color="info" tooltipText={"Delete collection"}/>
       <Typography variant="h6" sx={titleStyle}>

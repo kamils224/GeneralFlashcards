@@ -12,9 +12,8 @@ class FlashcardsTest(APITestCase):
     OBTAIN_TOKEN_URL = reverse_lazy("accounts:token_obtain_pair")
 
     USERS_COUNT = 3
-    CARDS = "cards"
+    CARDS_APP = "cards"
 
-    # Flashcards require users as owners, so init them in setUp method
     def _init_users(self, items_count: int):
         self.users = []
         self.users_json = []
@@ -61,7 +60,17 @@ class FlashcardsTest(APITestCase):
         access_token = response.data["access"]
         self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {access_token}")
 
+    def _create_flashcards(self, flashcards_count):
+        collections_count = 1
+        user = self.users[0]
+        user_json = self.users_json[0]
+        self._init_collections(collections_count, user.id, is_public=False)
+        collection = self.collections[0]
+        self._init_flashcards(flashcards_count, collection.id)
+        return user, user_json, collection
+
     def setUp(self) -> None:
+        # Flashcards require users as owners, so init them in setUp method
         self._init_users(self.USERS_COUNT)
 
     def test_get_public_collections(self):
@@ -69,7 +78,7 @@ class FlashcardsTest(APITestCase):
         user_id = self.users[0].id
 
         self._init_collections(collections_count, user_id, True)
-        url = reverse(f"{self.CARDS}:collection-list")
+        url = reverse(f"{self.CARDS_APP}:collection-list")
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -81,7 +90,7 @@ class FlashcardsTest(APITestCase):
         user_json = self.users_json[0]
 
         self._init_collections(collections_count, user_id, False)
-        url = reverse(f"{self.CARDS}:collection-list")
+        url = reverse(f"{self.CARDS_APP}:collection-list")
 
         self._login_user(user_json)
         response = self.client.get(url)
@@ -95,7 +104,7 @@ class FlashcardsTest(APITestCase):
         user_json = self.users_json[0]
 
         self._init_collections(collections_count, user.id, is_public=False)
-        url = reverse(f"{self.CARDS}:collection-user")
+        url = reverse(f"{self.CARDS_APP}:collection-user-collections")
         self._login_user(user_json)
         response = self.client.get(url)
 
@@ -106,7 +115,7 @@ class FlashcardsTest(APITestCase):
         collections_count = 5
         user = self.users[0]
         self._init_collections(collections_count, user.id, is_public=False)
-        url = reverse(f"{self.CARDS}:collection-user")
+        url = reverse(f"{self.CARDS_APP}:collection-user-collections")
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -126,15 +135,32 @@ class FlashcardsTest(APITestCase):
         self._init_flashcards(flashcards_count, collection_1.id)
         self._init_flashcards(flashcards_count, collection_2.id)
 
-        url = reverse(f"{self.CARDS}:collection-items", kwargs={"pk": collection_1.id})
+        url = reverse(
+            f"{self.CARDS_APP}:collection-flashcards", kwargs={"pk": collection_1.id}
+        )
         self._login_user(user_1_json)
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response.data), flashcards_count)
 
+    def test_post_collection(self):
+        url = reverse(f"{self.CARDS_APP}:collection-list")
+        collection_count = FlashcardsCollection.objects.count()
+
+        user = self.users[0]
+        self._login_user(user)
+
+        new_collection = {"title": "test title", "description": "test description"}
+        response = self.client.post(url, new_collection)
+
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(FlashcardsCollection.objects.count(), collection_count + 1)
+        self.assertEqual(response.data["title"], "test title")
+        self.assertEqual(response.data["description"], "test description")
+
     def test_get_flashcards(self):
-        url = reverse(f"{self.CARDS}:flashcards-list")
+        url = reverse(f"{self.CARDS_APP}:flashcard-list")
         response = self.client.get(url)
 
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -147,7 +173,6 @@ class FlashcardsTest(APITestCase):
         user_1_json = self.users_json[0]
         user_2 = self.users[1]
         user_2_json = self.users_json[1]
-        user_3 = self.users[2]
         user_3_json = self.users_json[2]
 
         self._init_collections(collections_count, user_1.id, is_public=False)
@@ -156,15 +181,14 @@ class FlashcardsTest(APITestCase):
         self._init_collections(collections_count, user_2.id, is_public=False)
         self._init_flashcards(flashcards_count_2, self.collections[0].id)
 
-        url = reverse(f"{self.CARDS}:flashcards-list")
+        url = reverse(f"{self.CARDS_APP}:flashcard-list")
+
         self._login_user(user_1_json)
         response_1 = self.client.get(url)
 
-        url = reverse(f"{self.CARDS}:flashcards-list")
         self._login_user(user_2_json)
         response_2 = self.client.get(url)
 
-        url = reverse(f"{self.CARDS}:flashcards-list")
         self._login_user(user_3_json)
         response_3 = self.client.get(url)
 
@@ -177,15 +201,6 @@ class FlashcardsTest(APITestCase):
         self.assertEqual(response_3.status_code, status.HTTP_200_OK)
         self.assertEqual(len(response_3.data), 0)
 
-    def _create_flashcards(self, flashcards_count):
-        collections_count = 1
-        user = self.users[0]
-        user_json = self.users_json[0]
-        self._init_collections(collections_count, user.id, is_public=False)
-        collection = self.collections[0]
-        self._init_flashcards(flashcards_count, collection.id)
-        return user, user_json, collection
-
     def test_post_flashcard(self):
         flashcards_count = 5
         user, user_json, collection = self._create_flashcards(flashcards_count)
@@ -196,7 +211,7 @@ class FlashcardsTest(APITestCase):
             "collection": collection.id,
         }
 
-        url = reverse(f"{self.CARDS}:flashcards-list")
+        url = reverse(f"{self.CARDS_APP}:flashcard-list")
         fail_response = self.client.post(url, new_flashcard)
 
         self.assertEqual(fail_response.status_code, status.HTTP_401_UNAUTHORIZED)
@@ -219,7 +234,7 @@ class FlashcardsTest(APITestCase):
         }
 
         flashcard_id = self.flashcards[0].id
-        url = reverse(f"{self.CARDS}:flashcards-detail", args=[flashcard_id])
+        url = reverse(f"{self.CARDS_APP}:flashcard-detail", args=[flashcard_id])
 
         before_update = Flashcard.objects.get(id=flashcard_id)
         fail_response = self.client.put(url, new_flashcard)
@@ -241,7 +256,7 @@ class FlashcardsTest(APITestCase):
         user, user_json, collection = self._create_flashcards(flashcards_count)
 
         flashcard_id = self.flashcards[0].id
-        url = reverse(f"{self.CARDS}:flashcards-detail", args=[flashcard_id])
+        url = reverse(f"{self.CARDS_APP}:flashcard-detail", args=[flashcard_id])
 
         fail_response = self.client.delete(url)
 

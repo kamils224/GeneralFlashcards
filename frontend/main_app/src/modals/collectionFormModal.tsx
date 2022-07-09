@@ -57,6 +57,12 @@ export const CollectionFormModal = (props: Props) => {
 
   useEffect(handleResponse, [newCollection, error]);
 
+  const form = pending ? <CircularLoading/> :
+            <>
+              <CustomIconButton onClick={handleClose} icon={<CloseIcon/>} color="info" tooltipText={"Close"}/>
+              <Title value="Create a collection"/>
+              <CollectionForm onSubmit={handleSubmit} onCancel={handleClose} />
+            </>;
   return (
     <Modal
       open={props.open}
@@ -64,13 +70,9 @@ export const CollectionFormModal = (props: Props) => {
       aria-labelledby="modal-modal-title"
       aria-describedby="modal-modal-description"
     >
-      {pending ? <CircularLoading text="Creating a new collection"/> :
-            <Box sx={boxStyle}>
-              <CustomIconButton onClick={handleClose} icon={<CloseIcon/>} color="info" tooltipText={"Close"}/>
-              <Title value="Create a collection"/>
-              <CollectionForm onSubmit={handleSubmit} onCancel={handleClose} />
-            </Box>
-      }
+      <Box sx={boxStyle}>
+        {form}
+      </Box>
     </Modal>
   );
 };
