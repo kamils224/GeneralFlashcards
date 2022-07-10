@@ -1,5 +1,5 @@
 import axios from "axiosInstance";
-import {ApiCreateError, ApiGetError} from "api/errors.api";
+import {ApiCreateError, ApiGetError, ApiRemoveError} from "api/errors.api";
 
 export class CollectionDto {
   constructor(public id: number, public title: string,
@@ -38,6 +38,13 @@ class CollectionsApi {
       return CollectionDto.fromResponse(response.data);
     } catch {
       throw new ApiCreateError();
+    }
+  }
+  async removeCollection(collectionId: number): Promise<void> {
+    try {
+      await axios.delete(`api/collection/${collectionId}`);
+    } catch {
+      throw new ApiRemoveError();
     }
   }
 }

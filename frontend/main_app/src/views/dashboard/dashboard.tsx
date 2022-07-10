@@ -10,11 +10,14 @@ import {YesNoModal} from "modals/yesNoModal";
 
 export const DashboardView = () => {
   const isMobile = useMediaQuery(useTheme().breakpoints.down("md"));
-  const {sendRequest: getCollections, pending, data: collections} =
+  const {sendRequest: getCollections, pending: loadingCollections, data: collections} =
       useHttp(collectionsApi.getCollections, true);
+  const {sendRequest: removeCollection, pending: removingCollection} =
+      useHttp(collectionsApi.removeCollection);
   const [collectionModalOpen, setCollectionModalOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [deleteMessage, setDeleteMessage] = useState("");
+  const [selectedCollection, setSelectedCollection] = useState<CollectionDto | null>(null);
 
   const actions = useMemo(() => [
     {
@@ -28,14 +31,28 @@ export const DashboardView = () => {
   const openRemoveModal = (data: CollectionDto) => {
     setDeleteMessage(`Do you want to delete ${data.title} collection?`);
     setDeleteModalOpen(true);
+    setSelectedCollection(data);
   };
 
+  const closeRemoveModal = () => {
+    setDeleteModalOpen(false);
+    setSelectedCollection(null);
+  };
+
+  const confirmCollectionRemove = async () => {
+    if (selectedCollection) {
+      closeRemoveModal();
+      removeCollection(selectedCollection.id).then(() => {
+        getCollections();
+      });
+    }
+  };
 
   useEffect(() => {
     getCollections();
   }, [getCollections]);
 
-  if (pending) {
+  if (loadingCollections || removingCollection) {
     return <Grid container spacing={3} p={2} alignItems="center" justifyContent="center">
       <CircularLoading textVariant="h6"
         text="Loading" size={80} style={{minHeight: "80vh"}}/>;
@@ -60,7 +77,8 @@ export const DashboardView = () => {
         onClose={()=> setCollectionModalOpen(false)}
         onSuccess={() => getCollections()}
       />
-      <YesNoModal message={deleteMessage} open={deleteModalOpen} onClose={()=>setDeleteModalOpen(false)}/>
+      <YesNoModal onSuccess={confirmCollectionRemove} message={deleteMessage}
+        open={deleteModalOpen} onClose={closeRemoveModal}/>
     </>
   );
 };

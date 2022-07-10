@@ -8,6 +8,11 @@ export class ApiCreateError implements Error {
   name = "ApiGetError";
 }
 
+export class ApiRemoveError implements Error {
+  message = "Could not remove data";
+  name = "ApiRemoveError";
+}
+
 export class LoginError implements Error {
   message = "Invalid email or password";
   name = "LoginError";

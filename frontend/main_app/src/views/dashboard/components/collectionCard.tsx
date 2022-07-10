@@ -84,7 +84,7 @@ export const CollectionCard = ({model, onRemove}: Props) => {
 
   const actionsGroup = (
     <Stack m={0} p={2} spacing={2} direction="row" justifyContent="center" alignItems="flex-end">
-      <Button size="small" variant="contained" color="primary">
+      <Button disabled={model.flashcardsCount == 0} size="small" variant="contained" color="primary">
             Start learning
       </Button>
       <Button size="small" variant="contained" color="secondary">
