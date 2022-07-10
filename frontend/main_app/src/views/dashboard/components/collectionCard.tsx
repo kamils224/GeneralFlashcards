@@ -4,7 +4,7 @@ import Colors from "styles/colors.module.scss";
 import {InfoButton} from "components/buttons/infoButton";
 import {CollectionDto} from "api/collections.api";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {CustomIconButton} from "components/buttons/customIconButton";
+import {RightCloseButton} from "components/buttons/rightCloseButton";
 
 const boxStyle = {
   "position": "relative",
@@ -13,6 +13,15 @@ const boxStyle = {
   "backgroundColor": Colors.backgroundSecondary,
   "boxShadow": 5,
   "borderRadius": 5,
+  ["@media (max-width:900px)"]: {
+    width: "550px",
+  },
+  ["@media (max-width:600px)"]: {
+    width: "400px",
+  },
+  ["@media (max-width:450px)"]: {
+    maxWidth: "350px",
+  },
 };
 const titleStyle = {
   "fontWeight": "bold",
@@ -50,9 +59,10 @@ const dateStyle = {
 
 type Props = {
     model: CollectionDto,
+    onRemove: (model: CollectionDto) => void,
 }
 
-export const CollectionCard = ({model}: Props) => {
+export const CollectionCard = ({model, onRemove}: Props) => {
   const [showDescription, setShowDescription] = useState(false);
   const switchContent = () => {
     setShowDescription(!showDescription);
@@ -74,7 +84,7 @@ export const CollectionCard = ({model}: Props) => {
 
   const actionsGroup = (
     <Stack m={0} p={2} spacing={2} direction="row" justifyContent="center" alignItems="flex-end">
-      <Button size="small" variant="contained" color="primary">
+      <Button disabled={model.flashcardsCount == 0} size="small" variant="contained" color="primary">
             Start learning
       </Button>
       <Button size="small" variant="contained" color="secondary">
@@ -83,13 +93,13 @@ export const CollectionCard = ({model}: Props) => {
     </Stack>
   );
 
-  const handleRemoveCollection = () => {
-    console.log("Remove collection");
+  const handleRemove = () => {
+    onRemove(model);
   };
 
   return (
-    <Paper sx={boxStyle}>
-      <CustomIconButton onClick={handleRemoveCollection}
+    <Paper sx={boxStyle as any}>
+      <RightCloseButton onClick={handleRemove}
         icon={<DeleteIcon/>} color="info" tooltipText={"Delete collection"}/>
       <Typography variant="h6" sx={titleStyle}>
         {model.title}

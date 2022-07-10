@@ -14,4 +14,4 @@ class FlashcardsCollectionSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = FlashcardsCollection
-        exclude = ("owner", )
+        exclude = ("owner",)
