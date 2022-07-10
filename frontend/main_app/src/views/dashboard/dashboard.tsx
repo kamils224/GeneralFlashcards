@@ -6,7 +6,7 @@ import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
 import {ActionItem, ActionsBar} from "views/dashboard/components/actionsBar";
 import {CollectionFormModal} from "modals/collectionFormModal";
-import {YesNoModal} from "../../modals/yesNoModal";
+import {YesNoModal} from "modals/yesNoModal";
 
 export const DashboardView = () => {
   const isMobile = useMediaQuery(useTheme().breakpoints.down("md"));
@@ -26,7 +26,7 @@ export const DashboardView = () => {
   ], []);
 
   const openRemoveModal = (data: CollectionDto) => {
-    setDeleteMessage(`Are you sure you want to delete ${data.title} collection?`);
+    setDeleteMessage(`Do you want to delete ${data.title} collection?`);
     setDeleteModalOpen(true);
   };
 

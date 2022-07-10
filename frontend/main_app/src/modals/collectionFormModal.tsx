@@ -24,7 +24,7 @@ const boxStyle = {
 
 
 export const CollectionFormModal = (props: Props) => {
-  const {onClose, onSuccess} = props;
+  const {onClose, onSuccess, open} = props;
 
   const {sendRequest: sendCreateCollection, pending, data: newCollection, error} =
       useHttp<CollectionDto>(collectionsApi.createCollection, false);
@@ -58,7 +58,7 @@ export const CollectionFormModal = (props: Props) => {
             </>;
   return (
     <Modal
-      open={props.open}
+      open={open}
       onClose={onClose}
     >
       <Box sx={boxStyle}>

@@ -7,7 +7,7 @@ import {RightCloseButton} from "../components/buttons/rightCloseButton";
 const boxStyle = {
   ...modalDefaults,
   width: {xs: 300, sm: 400},
-  height: 200,
+  height: 150,
 };
 
 const buttonStyle = {
@@ -23,9 +23,9 @@ type Props = {
 
 
 export const YesNoModal = (props: Props) => {
-  const {onClose, onSuccess} = props;
+  const {onClose, onSuccess, open} = props;
   return (
-    <Modal open={props.open} onClose={onClose}>
+    <Modal open={open} onClose={onClose}>
       <Box sx={boxStyle as any}>
         <RightCloseButton onClick={onClose} icon={<CloseIcon/>} color="info" tooltipText={"Close"}/>
         <Grid direction="row"
@@ -37,10 +37,10 @@ export const YesNoModal = (props: Props) => {
             <Typography sx={{textAlign: "center"}} variant="h6" >{props.message}</Typography>
           </Grid>
           <Grid textAlign="center" item xs={6}>
-            <Button sx={buttonStyle} color="primary" type="submit" variant="contained">Yes</Button>
+            <Button onClick={onSuccess} sx={buttonStyle} color="primary" type="submit" variant="contained">Yes</Button>
           </Grid>
           <Grid textAlign="center" item xs={6}>
-            <Button sx={buttonStyle} color="error" type="submit" variant="contained">No</Button>
+            <Button onClick={onClose} sx={buttonStyle} color="error" type="submit" variant="contained">No</Button>
           </Grid>
         </Grid>
       </Box>
