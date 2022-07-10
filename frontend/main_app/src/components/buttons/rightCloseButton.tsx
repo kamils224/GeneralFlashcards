@@ -15,7 +15,7 @@ type Props = {
 }
 
 
-export const CustomIconButton = (props: Props) => {
+export const RightCloseButton = (props: Props) => {
   const style = {
     "position": props.position || "absolute",
     "right": props.right || "1%",

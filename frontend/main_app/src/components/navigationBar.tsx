@@ -6,8 +6,11 @@ import {removeAuthData} from "redux-store/slices/authSlice";
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "routes/routeNames";
 
+const barStyle = {boxShadow: 5, margin: 0, marginBottom: 3, minWidth: "100%"};
+const titleStyle = {textShadow: "1px 1px black"};
+const subtitleStyle = {fontWeight: "bold"};
+
 export const NavigationBar: React.FC<React.ReactNode> = () => {
-  const titleStyle = {textShadow: "1px 1px black"};
   const isAuthenticated = useAppSelector(selectIsAuthenticated);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -17,15 +20,15 @@ export const NavigationBar: React.FC<React.ReactNode> = () => {
     navigate(RouteNames.login, {replace: true});
   };
 
-  return <AppBar position="sticky" sx={{boxShadow: 5, margin: 0, marginBottom: 3}}>
+  return <AppBar position="sticky" sx={barStyle}>
     <Toolbar>
       <Box sx={{flexGrow: 1}}>
         <Typography color="secondary" variant="h4" component="div"
           sx={{fontWeight: "bold"}}>
-          <span style={titleStyle}>Flashcards</span>
+          <span style={titleStyle as any}>Flashcards</span>
         </Typography>
-        <Typography sx={{fontWeight: "bold"}} color="secondary" variant="h5" component="div">
-          <span style={titleStyle}>for general purpose</span>
+        <Typography sx={subtitleStyle} color="secondary" variant="h6" component="div">
+          <span style={titleStyle as any}>for general purpose</span>
         </Typography>
       </Box>
       {isAuthenticated && <Button onClick={logOut}

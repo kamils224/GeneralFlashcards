@@ -31,7 +31,7 @@ export const CollectionForm = (props: Props) => {
         <Divider/>
         {props.onCancel && <Button onClick={() => {
           props.onCancel?.();
-        }} color="secondary"
+        }} color="error"
         type="button" variant="contained">Cancel</Button> }
       </Stack>
     </form>

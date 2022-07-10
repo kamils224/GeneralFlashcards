@@ -4,7 +4,7 @@ import Colors from "styles/colors.module.scss";
 import {InfoButton} from "components/buttons/infoButton";
 import {CollectionDto} from "api/collections.api";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {CustomIconButton} from "components/buttons/customIconButton";
+import {RightCloseButton} from "components/buttons/rightCloseButton";
 
 const boxStyle = {
   "position": "relative",
@@ -18,6 +18,9 @@ const boxStyle = {
   },
   ["@media (max-width:600px)"]: {
     width: "400px",
+  },
+  ["@media (max-width:450px)"]: {
+    maxWidth: "350px",
   },
 };
 const titleStyle = {
@@ -56,9 +59,10 @@ const dateStyle = {
 
 type Props = {
     model: CollectionDto,
+    onRemove: (model: CollectionDto) => void,
 }
 
-export const CollectionCard = ({model}: Props) => {
+export const CollectionCard = ({model, onRemove}: Props) => {
   const [showDescription, setShowDescription] = useState(false);
   const switchContent = () => {
     setShowDescription(!showDescription);
@@ -89,13 +93,13 @@ export const CollectionCard = ({model}: Props) => {
     </Stack>
   );
 
-  const handleRemoveCollection = () => {
-    console.log("Remove collection");
+  const handleRemove = () => {
+    onRemove(model);
   };
 
   return (
     <Paper sx={boxStyle as any}>
-      <CustomIconButton onClick={handleRemoveCollection}
+      <RightCloseButton onClick={handleRemove}
         icon={<DeleteIcon/>} color="info" tooltipText={"Delete collection"}/>
       <Typography variant="h6" sx={titleStyle}>
         {model.title}
