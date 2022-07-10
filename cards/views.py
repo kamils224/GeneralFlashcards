@@ -1,3 +1,4 @@
+from django.db.models import Q
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
@@ -9,9 +10,19 @@ from cards.serializers import FlashcardsCollectionSerializer, FlashcardSerialize
 
 
 class FlashcardsCollectionViewSet(viewsets.ModelViewSet):
-    queryset = FlashcardsCollection.objects.filter(is_public=True)
+    queryset = FlashcardsCollection.objects.all()
     serializer_class = FlashcardsCollectionSerializer
     permission_classes = [IsOwnerOrReadOnly]
+
+    def perform_create(self, serializer):
+        if not self.request.user.is_anonymous:
+            serializer.save(owner=self.request.user)
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.request.user.is_anonymous:
+            return qs.filter(is_public=True)
+        return qs.filter(Q(owner=self.request.user) | Q(is_public=True))
 
     @action(
         methods=["get"],
@@ -37,10 +48,6 @@ class FlashcardsCollectionViewSet(viewsets.ModelViewSet):
         collections = FlashcardsCollection.objects.filter(owner=user.id)
         serializer = FlashcardsCollectionSerializer(collections, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    def perform_create(self, serializer):
-        if not self.request.user.is_anonymous:
-            serializer.save(owner=self.request.user)
 
 
 class FlashcardViewSet(viewsets.ModelViewSet):
