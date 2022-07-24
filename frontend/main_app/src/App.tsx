@@ -9,6 +9,7 @@ import {RouteNames} from "routes/routeNames";
 import PrivateRoute from "routes/privateRoute";
 import PublicOnlyRoute from "routes/publicOnlyRoute";
 import {Container} from "@mui/material";
+import {CollectionView} from "./views/collection/collection";
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path={RouteNames.home} element={<PrivateRoute/>}>
             <Route path={RouteNames.dashboard} element={<DashboardView/>}/>
+            <Route path={RouteNames.collection} element={<CollectionView/>}/>
           </Route>
           <Route path={RouteNames.home} element={<PublicOnlyRoute/>}>
             <Route path={RouteNames.login} element={<LoginView/>}/>

@@ -5,6 +5,8 @@ import {InfoButton} from "components/buttons/infoButton";
 import {CollectionDto} from "api/collections.api";
 import DeleteIcon from "@mui/icons-material/Delete";
 import {RightCloseButton} from "components/buttons/rightCloseButton";
+import {useNavigate} from "react-router-dom";
+import {RouteNames} from "routes/routeNames";
 
 const boxStyle = {
   "position": "relative",
@@ -64,8 +66,13 @@ type Props = {
 
 export const CollectionCard = ({model, onRemove}: Props) => {
   const [showDescription, setShowDescription] = useState(false);
+  const navigate = useNavigate();
   const switchContent = () => {
     setShowDescription(!showDescription);
+  };
+
+  const toCollectionView = () => {
+    navigate(RouteNames.collection.replace(":id", `${model.id}`));
   };
 
   const mainContent = (
@@ -87,7 +94,7 @@ export const CollectionCard = ({model, onRemove}: Props) => {
       <Button disabled={model.flashcardsCount == 0} size="small" variant="contained" color="primary">
             Start learning
       </Button>
-      <Button size="small" variant="contained" color="secondary">
+      <Button onClick={toCollectionView} size="small" variant="contained" color="secondary">
             Edit collection
       </Button>
     </Stack>
