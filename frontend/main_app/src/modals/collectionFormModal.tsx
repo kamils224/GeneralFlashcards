@@ -3,7 +3,7 @@ import {Box, Modal, SxProps, Theme} from "@mui/material";
 import {CollectionForm, CollectionFormData} from "forms/collectionForm";
 import CloseIcon from "@mui/icons-material/Close";
 import {Title} from "components/title";
-import {RightCloseButton} from "components/buttons/rightCloseButton";
+import {CloseButton} from "components/buttons/closeButton";
 import useHttp from "hooks/useHttp";
 import collectionsApi, {CollectionDto} from "api/collections.api";
 import {CircularLoading} from "components/loadings/circularLoading";
@@ -52,7 +52,7 @@ export const CollectionFormModal = (props: Props) => {
 
   const form = pending ? <CircularLoading/> :
             <>
-              <RightCloseButton onClick={onClose} icon={<CloseIcon/>} color="info" tooltipText={"Close"}/>
+              <CloseButton onClick={onClose} icon={<CloseIcon/>} color="info" tooltipText={"Close"}/>
               <Title value="Create a collection"/>
               <CollectionForm onSubmit={handleSubmit} onCancel={onClose} />
             </>;

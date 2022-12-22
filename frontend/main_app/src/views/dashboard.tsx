@@ -1,10 +1,11 @@
 import React, {useEffect, useMemo, useState} from "react";
 import {Grid, useMediaQuery, useTheme} from "@mui/material";
-import {CollectionCard} from "views/dashboard/components/collectionCard";
 import collectionsApi, {CollectionDto} from "api/collections.api";
 import {CircularLoading} from "components/loadings/circularLoading";
 import useHttp from "hooks/useHttp";
-import {ActionItem, ActionsBar} from "views/dashboard/components/actionsBar";
+import {ActionItem, ActionsBar} from "components/dashboard/actionsBar";
+import {CollectionCard} from "components/dashboard/collectionCard";
+
 import {CollectionFormModal} from "modals/collectionFormModal";
 import {YesNoModal} from "modals/yesNoModal";
 

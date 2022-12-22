@@ -2,7 +2,7 @@ import React from "react";
 import {Box, Button, Grid, Modal, Typography} from "@mui/material";
 import {modalDefaults} from "styles/constants";
 import CloseIcon from "@mui/icons-material/Close";
-import {RightCloseButton} from "../components/buttons/rightCloseButton";
+import {CloseButton} from "components/buttons/closeButton";
 
 const boxStyle = {
   ...modalDefaults,
@@ -27,7 +27,7 @@ export const YesNoModal = (props: Props) => {
   return (
     <Modal open={open} onClose={onClose}>
       <Box sx={boxStyle as any}>
-        <RightCloseButton onClick={onClose} icon={<CloseIcon/>} color="info" tooltipText={"Close"}/>
+        <CloseButton onClick={onClose} icon={<CloseIcon/>} color="info" tooltipText={"Close"}/>
         <Grid direction="row"
           justifyContent="center"
           alignItems="center"

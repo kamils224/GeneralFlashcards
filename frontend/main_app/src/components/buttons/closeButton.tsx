@@ -6,20 +6,18 @@ type Props = {
     icon: JSX.Element,
     onClick: () => any,
     color?: "secondary"|"success"|"inherit"|"warning"|"error"|"primary"|"info",
-    position?: string,
-    top?: string,
-    right?: string,
     hoverColor?: string,
     tooltipText?: string,
     sx?: Record<string, any>,
 }
 
+const wrapperStyle = {
+  display: "flex",
+  justifyContent: "end",
+};
 
-export const RightCloseButton = (props: Props) => {
+export const CloseButton = (props: Props) => {
   const style = {
-    "position": props.position || "absolute",
-    "right": props.right || "1%",
-    "top": props.top || "1%",
     "&:hover": {
       "backgroundColor": props.hoverColor || Colors.backgroundInfo,
     },
@@ -28,11 +26,13 @@ export const RightCloseButton = (props: Props) => {
   const handleClick = () => props.onClick();
   return (
     <>
-      {props.tooltipText ?
+      <div style={wrapperStyle}>
+        {props.tooltipText ?
           (<Tooltip arrow placement="bottom" title={props.tooltipText}>
             <Button onClick={handleClick} sx={style as any} color={props.color}>{props.icon}</Button>
           </Tooltip>) :
           <Button sx={style as any} color={props.color}>{props.icon}</Button>}
+      </div>
     </>
   );
 };
