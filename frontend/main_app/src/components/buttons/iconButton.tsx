@@ -8,20 +8,23 @@ type Props = {
     color?: "secondary"|"success"|"inherit"|"warning"|"error"|"primary"|"info",
     hoverColor?: string,
     tooltipText?: string,
-    sx?: Record<string, any>,
+    buttonStyle?: Record<string, any>,
+    wrapperStyle?: Record<string, any>,
+    justifyContent?: string
 }
 
-const wrapperStyle = {
-  display: "flex",
-  justifyContent: "end",
-};
+export const IconButton = (props: Props) => {
+  const wrapperStyle = {
+    display: "flex",
+    justifyContent: props.justifyContent || "end",
+    ...props.wrapperStyle,
+  };
 
-export const CloseButton = (props: Props) => {
   const style = {
     "&:hover": {
       "backgroundColor": props.hoverColor || Colors.backgroundInfo,
     },
-    ...props.sx,
+    ...props.buttonStyle,
   };
   const handleClick = () => props.onClick();
   return (

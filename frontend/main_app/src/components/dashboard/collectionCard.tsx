@@ -3,7 +3,8 @@ import {Divider, Button, Typography, Stack, Paper} from "@mui/material";
 import Colors from "styles/colors.module.scss";
 import {CollectionDto} from "api/collections.api";
 import DeleteIcon from "@mui/icons-material/Delete";
-import {CloseButton} from "components/buttons/closeButton";
+import EditIcon from "@mui/icons-material/Edit";
+import {IconButton} from "components/buttons/iconButton";
 import {useNavigate} from "react-router-dom";
 import {RouteNames} from "routes/routeNames";
 
@@ -85,8 +86,15 @@ export const CollectionCard = ({model, onRemove}: Props) => {
 
   return (
     <Paper sx={boxStyle as any}>
-      <CloseButton onClick={handleRemove}
-        icon={<DeleteIcon/>} color="info" tooltipText={"Delete collection"} sx={{marginRight: 1, marginTop: 1}}/>
+      <Stack direction="row" justifyContent="space-between">
+        <IconButton onClick={() => {
+          console.log("edit");
+        }} icon={<EditIcon/>} color="info"
+        tooltipText={"Edit collection name"} buttonStyle={{marginLeft: 1, marginTop: 1}}/>
+        <IconButton onClick={handleRemove}
+          icon={<DeleteIcon/>} color="info" tooltipText={"Delete collection"}
+          buttonStyle={{marginRight: 1, marginTop: 1}}/>
+      </Stack>
       <Typography variant="h6" sx={titleStyle}>
         {model.title}
       </Typography>
