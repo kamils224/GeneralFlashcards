@@ -30,7 +30,7 @@ export const DashboardView = () => {
   ], []);
 
   const openRemoveModal = (data: CollectionDto) => {
-    setDeleteMessage(`Do you want to delete ${data.title} collection?`);
+    setDeleteMessage(`Do you really want to delete ${data.title} collection?`);
     setDeleteModalOpen(true);
     setSelectedCollection(data);
   };

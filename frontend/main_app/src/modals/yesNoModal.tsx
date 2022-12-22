@@ -32,7 +32,7 @@ export const YesNoModal = (props: Props) => {
           justifyContent="center"
           alignItems="center"
           display="flex"
-          mt={2} container spacing={2}>
+          container spacing={1}>
           <Grid item xs={12}>
             <Typography sx={{textAlign: "center"}} variant="h6" >{props.message}</Typography>
           </Grid>
