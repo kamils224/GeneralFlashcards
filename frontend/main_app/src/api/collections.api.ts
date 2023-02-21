@@ -3,14 +3,12 @@ import {ApiCreateError, ApiGetError, ApiRemoveError} from "api/errors.api";
 
 export class CollectionDto {
   constructor(public id: number, public title: string,
-              public description: string, public dateCreated: Date,
-              public isPublic: boolean, public flashcardsCount: number,
+              public dateCreated: Date, public isPublic: boolean, public flashcardsCount: number,
   ) {}
   public static fromResponse(data: Record<string, any>) : CollectionDto {
     return new CollectionDto(
         data.id,
         data.title,
-        data.description,
         new Date(data.date_created),
         data.is_public,
         data.flashcards_count,
@@ -20,7 +18,6 @@ export class CollectionDto {
 
 export interface CollectionCreatePayload {
   title: string;
-  description: string;
 }
 
 class CollectionsApi {

@@ -35,7 +35,6 @@ class FlashcardsTest(APITestCase):
         for i in range(items_count):
             item_data = {
                 "title": f"{prefix}title{i}",
-                "description": f"description{i}",
                 "owner": user,
                 "is_public": is_public,
             }
@@ -156,13 +155,12 @@ class FlashcardsTest(APITestCase):
 
         self._login_user(self.users_json[0])
 
-        new_collection = {"title": "test title", "description": "test description"}
+        new_collection = {"title": "test title"}
         response = self.client.post(url, new_collection)
 
         self.assertEqual(response.status_code, status.HTTP_201_CREATED)
         self.assertEqual(FlashcardsCollection.objects.count(), collection_count + 1)
         self.assertEqual(response.data["title"], new_collection["title"])
-        self.assertEqual(response.data["description"], new_collection["description"])
 
     def test_delete_collection(self):
         collections_count = 5

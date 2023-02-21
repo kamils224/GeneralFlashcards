@@ -7,7 +7,7 @@ import {IconButton} from "components/buttons/iconButton";
 const boxStyle = {
   ...modalDefaults,
   width: {xs: 300, sm: 400},
-  height: 150,
+  minHeight: 150,
 };
 
 const buttonStyle = {

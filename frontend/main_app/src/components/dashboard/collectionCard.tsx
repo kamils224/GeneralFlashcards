@@ -15,6 +15,8 @@ const boxStyle = {
   "backgroundColor": Colors.backgroundSecondary,
   "boxShadow": 5,
   "borderRadius": 5,
+  "display": "block",
+  "justifyContent": "space-between",
   ["@media (max-width:900px)"]: {
     width: "550px",
   },
@@ -66,11 +68,11 @@ export const CollectionCard = ({model, onRemove}: Props) => {
 
   const statsContent = (
     <Divider>
-      <Typography variant="h6" sx={statsStyle}>Items: {model.flashcardsCount}</Typography>
+      <Typography variant="h6" sx={statsStyle}>Cards: {model.flashcardsCount}</Typography>
     </Divider>
   );
   const actionsGroup = (
-    <Stack m={0} p={2} spacing={2} direction="row" justifyContent="center" alignItems="flex-end">
+    <Stack m={0} p={0} spacing={1} direction="row" justifyContent="center">
       <Button disabled={model.flashcardsCount == 0} variant="contained" color="primary">
             Start learning
       </Button>
@@ -99,8 +101,8 @@ export const CollectionCard = ({model, onRemove}: Props) => {
         {model.title}
       </Typography>
       {statsContent}
-      <Typography variant="h6" sx={dateStyle}>
-                Created:&nbsp; {model.dateCreated.toLocaleDateString()}
+      <Typography m={2} variant="h6" sx={dateStyle}>
+          Created:&nbsp; {model.dateCreated.toLocaleDateString()}
       </Typography>
       {actionsGroup}
     </Paper>
