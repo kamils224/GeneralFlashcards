@@ -29,8 +29,8 @@ export const CollectionFormModal = (props: Props) => {
   const {sendRequest: sendCreateCollection, pending, data: newCollection, error} =
       useHttp<CollectionDto>(collectionsApi.createCollection, false);
 
-  const handleSubmit = (payload: CollectionFormData) => {
-    sendCreateCollection({title: payload.title, description: payload.description});
+  const handleSubmit = async (payload: CollectionFormData) => {
+    await sendCreateCollection({title: payload.title});
   };
   const handleSuccess = () => {
     if (newCollection) {

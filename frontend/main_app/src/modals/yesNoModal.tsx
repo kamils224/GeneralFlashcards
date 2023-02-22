@@ -1,5 +1,5 @@
 import React from "react";
-import {Box, Button, Grid, Modal, Typography} from "@mui/material";
+import {Box, Button, Grid, Stack, Modal, Typography} from "@mui/material";
 import {modalDefaults} from "styles/constants";
 import CloseIcon from "@mui/icons-material/Close";
 import {IconButton} from "components/buttons/iconButton";
@@ -28,21 +28,13 @@ export const YesNoModal = (props: Props) => {
     <Modal open={open} onClose={onClose}>
       <Box sx={boxStyle as any}>
         <IconButton onClick={onClose} icon={<CloseIcon/>} color="info" tooltipText={"Close"}/>
-        <Grid direction="row"
-          justifyContent="center"
-          alignItems="center"
-          display="flex"
-          container spacing={1}>
-          <Grid item xs={12}>
-            <Typography sx={{textAlign: "center"}} variant="h6" >{props.message}</Typography>
-          </Grid>
-          <Grid textAlign="center" item xs={6}>
+        <Stack direction="column" justifyContent="space-between" spacing={2} alignItems="stretch">
+          <Typography sx={{textAlign: "center"}} variant="h6" >{props.message}</Typography>
+          <Stack direction="row" justifyContent="space-around">
             <Button onClick={onSuccess} sx={buttonStyle} color="primary" type="submit" variant="contained">Yes</Button>
-          </Grid>
-          <Grid textAlign="center" item xs={6}>
             <Button onClick={onClose} sx={buttonStyle} color="error" type="submit" variant="contained">No</Button>
-          </Grid>
-        </Grid>
+          </Stack>
+        </Stack>
       </Box>
     </Modal>
   );

@@ -3,7 +3,6 @@ import {Button, Divider, Stack, TextField} from "@mui/material";
 
 export interface CollectionFormData {
     title: string;
-    description: string;
 }
 
 type Props = {
@@ -13,20 +12,15 @@ type Props = {
 
 export const CollectionForm = (props: Props) => {
   const titleInput = useRef<HTMLInputElement>(null);
-  const descriptionInput = useRef<HTMLInputElement>(null);
   const {onSubmit} = props;
 
   return (
     <form onSubmit={(e)=> {
       e.preventDefault();
-      onSubmit({
-        title: titleInput.current?.value || "",
-        description: descriptionInput.current?.value || "",
-      });
+      onSubmit({title: titleInput.current?.value || ""});
     }}>
       <Stack m={5} alignItems="stretch" justifyContent="center" spacing={2}>
         <TextField required label="Collection name" variant="outlined" inputRef={titleInput}/>
-        <TextField multiline maxRows={6} label="Description" variant="outlined" inputRef={descriptionInput}/>
         <Button color="primary" type="submit" variant="contained">Add</Button>
         <Divider/>
         {props.onCancel && <Button onClick={() => {
